@@ -1,0 +1,31 @@
+include $(ROOTDIR)/options.txt
+
+INCLUDEDIR=$(ROOTDIR)/include
+SCALARDIR=$(ROOTDIR)/objects/scalar
+TENSORDIR=$(ROOTDIR)/objects/tensor
+TENSORARRAYDIR=$(ROOTDIR)/objects/tensor_array
+
+MANAGEDDIR=$(ROOTDIR)/managed
+MSCALARDIR=$(ROOTDIR)/managed/scalar
+MTENSORDIR=$(ROOTDIR)/managed/tensor
+MTENSORARRAYDIR=$(ROOTDIR)/objects/managed/tensor_array
+
+CNINE_CUDADIR=$(ROOTDIR)/cuda
+
+CENGINE_INCLUDES=-I$(CENGINE_ROOT)/include -I$(CENGINE_ROOT)/engine 
+
+
+CFLAGS= -std=c++11 -O3 #-ferror-limit=1 
+INCLUDE= -I $(ROOTDIR)/include 
+LIBS= -lstdc++ -lm -lpthread 
+
+MACROS=
+
+ifdef WITH_CUDA
+MACROS+=-D_WITH_CUDA
+endif 
+
+ifdef WITH_CUBLAS
+MACROS+=-D_WITH_CUBLAS
+endif 
+
