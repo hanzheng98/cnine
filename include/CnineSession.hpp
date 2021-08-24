@@ -16,6 +16,8 @@
 #include "CengineSession.hpp"
 #endif 
 
+extern cublasHandle_t cnine_cublas;
+
 
 namespace cnine{
 
