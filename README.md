@@ -1,5 +1,5 @@
 # cnine
-Lighweight C++ tensor library
+Lightweight C++ tensor library
 
 cnine is a simple C++/CUDA tensor library developed by Risi Kondor's group at the University of Chicago. Cnine is designed to make some of the power of modern GPU architectures accessible directly from C++ code, without relying on complex proprietary libraries. 
 
