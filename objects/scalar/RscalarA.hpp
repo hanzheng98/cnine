@@ -17,7 +17,7 @@ extern default_random_engine rndGen;
 
 namespace cnine{
 
-  class RscalarA: public CnineBackendObject{
+  class RscalarA: public CnineObject, public CnineBackendObject{
   public:
 
     int nbu=-1;
@@ -160,6 +160,10 @@ namespace cnine{
       return *this;
     }
 
+    //CnineObject* spawn_zero() const{
+    //return new RscalarA(nbu,fill::zero);
+    //}
+
 
   public: // ---- Conversions -------------------------------------------------------------------------------
 
@@ -272,6 +276,12 @@ namespace cnine{
       else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i];
     }
 
+    void add_conj(const RscalarA& x){
+      assert(nbu==x.nbu);
+      if(nbu==-1) val+=x.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i];
+    }
+
     void add(const RscalarA& x, const float c){
       assert(nbu==x.nbu);
       if(nbu==-1) val+=c*x.val;
@@ -296,7 +306,21 @@ namespace cnine{
       else for(int i=0; i<nbu; i++) arr[i]-=x.arr[i];
     }
 
+    void add_minus(const RscalarA& x, const RscalarA& y){
+      assert(nbu==x.nbu);
+      assert(nbu==y.nbu);
+      if(nbu==-1) val+=x.val-y.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]-y.arr[i];
+    }
+
     void add_prod(const RscalarA& x, const RscalarA& y){
+      assert(nbu==x.nbu);
+      assert(nbu==y.nbu);
+      if(nbu==-1) val+=x.val*y.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*y.arr[i];
+    }
+
+    void add_prodc1(const RscalarA& x, const RscalarA& y){
       assert(nbu==x.nbu);
       assert(nbu==y.nbu);
       if(nbu==-1) val+=x.val*y.val;
@@ -323,6 +347,25 @@ namespace cnine{
       assert(nbu==y.nbu);
       if(nbu==-1) val-=g.val*x.val/y.val/y.val;
       else for(int i=0; i<nbu; i++) arr[i]-=g.arr[i]*x.arr[i]*pow(y.arr[i],-2.0);
+    }
+
+    void add_norm2(const RscalarA& x){
+      assert(nbu==x.nbu);
+      if(nbu==-1) val+=x.val*x.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*x.arr[i];
+    }
+
+    void add_norm2_to(RscalarA& r) const{
+      assert(nbu==r.nbu);
+      if(nbu==-1) r.val+=val*val;
+      else for(int i=0; i<nbu; i++) r.arr[i]+=arr[i]*arr[i];
+    }
+
+    void add_norm2_back(const RscalarA& x, const RscalarA& y){
+      assert(nbu==x.nbu);
+      assert(nbu==y.nbu);
+      if(nbu==-1) val+=2.0*x.val*y.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=2.0*x.arr[i]*y.arr[i];
     }
 
     void add_abs(const RscalarA& x){

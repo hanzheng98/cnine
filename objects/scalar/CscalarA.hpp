@@ -19,7 +19,7 @@ extern default_random_engine rndGen;
 namespace cnine{
 
 
-  class CscalarA: public CnineBackendObject{
+  class CscalarA: public CnineObject, public CnineBackendObject{
   public:
 
     int nbu=-1;
@@ -211,6 +211,22 @@ namespace cnine{
       return nbu;
     }
 
+    complex<float> get_value() const{
+      assert(nbu==-1);
+      return val;
+    }
+
+    complex<float> value() const{
+      assert(nbu==-1);
+      return val;
+    }
+
+    CscalarA& set_value(complex<float> x){
+      assert(nbu==-1);
+      val=x;
+      return *this;
+    }
+    
     RscalarA real() const{
       RscalarA R(nbu,fill::raw);
       if(nbu==-1) R.val=val.real();
@@ -348,6 +364,18 @@ namespace cnine{
       else for(int i=0; i<nbu; i++) arr[i]+=std::conj(x.arr[i]);
     }
 
+    void add_real_to(RscalarA& x){
+      assert(nbu==x.nbu);
+      if(nbu==-1) x.val+=val.real();
+      else for(int i=0; i<nbu; i++) x.arr[i]+=arr[i].real();
+    }
+
+    void add_imag_to(RscalarA& x){
+      assert(nbu==x.nbu);
+      if(nbu==-1) x.val+=val.imag();
+      else for(int i=0; i<nbu; i++) x.arr[i]+=arr[i].imag();
+    }
+
     void add_sum(const vector<CscalarA*> v){
       const int N=v.size();
       if(N==0) return; 
@@ -367,12 +395,24 @@ namespace cnine{
       else for(int i=0; i<nbu; i++) arr[i]-=x.arr[i];
     }
 
+    void add_minus(const CscalarA& x, const CscalarA& y){
+      assert(nbu==x.nbu);
+      assert(nbu==y.nbu);
+      if(nbu==-1) val+=x.val-y.val;
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]-y.arr[i];
+    }
+
     void add_prod(const CscalarA& x, const CscalarA& y){
       if(nbu==-1) val+=x.val*y.val;
       else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*y.arr[i];
     }
 
     void add_prodc(const CscalarA& x, const CscalarA& y){
+      if(nbu==-1) val+=x.val*std::conj(y.val);
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*std::conj(y.arr[i]);
+    }
+
+    void add_prodc1(const CscalarA& x, const CscalarA& y){
       if(nbu==-1) val+=x.val*std::conj(y.val);
       else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*std::conj(y.arr[i]);
     }
@@ -402,6 +442,18 @@ namespace cnine{
       else for(int i=0; i<nbu; i++) arr[i]-=g.arr[i]*std::conj(x.arr[i]*complex<float>(pow(y.arr[i],-2.0)));
     }
 
+    void add_norm2_to(RscalarA& r) const{
+      assert(nbu==r.nbu);
+      if(nbu==-1) r.val+=std::real(val*std::conj(val));
+      else for(int i=0; i<nbu; i++) r.arr[i]+=std::real(arr[i]*std::conj(arr[i]));
+    }
+
+    void add_norm2_back(const RscalarA& x, const CscalarA& y){
+      assert(nbu==x.nbu);
+      assert(nbu==y.nbu);
+      if(nbu==-1) val+=x.val*(y.val+std::conj(y.val));
+      else for(int i=0; i<nbu; i++) arr[i]+=x.arr[i]*(y.arr[i]+std::conj(y.arr[i]));
+    }
 
     void add_abs(const CscalarA& x){
       if(nbu==-1) val+=std::abs(x.val);

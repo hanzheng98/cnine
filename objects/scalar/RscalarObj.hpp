@@ -10,6 +10,7 @@
 #ifndef _cnineRscalarObj
 #define _cnineRscalarObj
 
+#include "CnineObject.hpp"
 #include "RscalarA.hpp"
 
 #ifdef _WITH_CENGINE
@@ -74,6 +75,11 @@ namespace cnine{
       return new RscalarObj(nbu,fill::zero);
     }
     */
+
+    CnineObject* spawn_zero() const{
+      return new RscalarObj(nbu,fill::zero);
+    }
+
 
   public: // ---- Conversions --------------------------------------------------------------------------------
 
@@ -180,17 +186,41 @@ namespace cnine{
 
     
     string classname() const{
-      return "GEnet::RscalarObj";
+      return "cnine::RscalarObj";
     }
 
     string describe() const{
       return "Rscalar";
     } 
 
+    string str(const string indent="") const{
+      return CNINE_RSCALAR_IMPL::str(indent);
+    }
+
     friend ostream& operator<<(ostream& stream, const RscalarObj& x){
       stream<<x.str(); return stream;}
 
   };
+
+  
+  inline CNINE_RSCALAR_IMPL& asRscalar(CnineObject* x){
+    assert(x); 
+    if(!dynamic_cast<CNINE_RSCALAR_IMPL*>(x))
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of RscalarA."<<endl;
+    assert(dynamic_cast<CNINE_RSCALAR_IMPL*>(x));
+    return static_cast<CNINE_RSCALAR_IMPL&>(*x);
+  }
+
+  /*
+  inline CNINE_RSCALAR_IMPL& asRscalarA(Cnode* x){
+    assert(x->obj);
+    if(!dynamic_cast<CNINE_RSCALAR_IMPL*>(x->obj))
+      cerr<<"cnine error: object is of type "<<x->obj->classname()<<" instead of RscalarA."<<endl;
+    assert(dynamic_cast<CNINE_RSCALAR_IMPL*>(x->obj));
+    return static_cast<CNINE_RSCALAR_IMPL&>(*x->obj);
+  }
+  */
+
 
 }
 

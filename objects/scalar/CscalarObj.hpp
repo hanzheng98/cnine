@@ -1,3 +1,4 @@
+
 //  This file is part of cnine, a lightweight C++ tensor library. 
 // 
 //  Copyright (c) 2021, Imre Risi Kondor
@@ -10,9 +11,11 @@
 #ifndef _CnineCscalarObj
 #define _CnineCscalarObj
 
+#include "CnineObject.hpp"
 #include "CscalarA.hpp"
 #include "RscalarObj.hpp"
 #include "ExprTemplates.hpp"
+
 
 namespace cnine{
 
@@ -27,7 +30,8 @@ namespace cnine{
   public:
 
     using CNINE_CSCALAR_IMPL::CNINE_CSCALAR_IMPL; 
-
+    using CNINE_CSCALAR_IMPL::set_zero; 
+    
 
   public: // ---- Named constructors -------------------------------------------------------------------------
 
@@ -62,6 +66,15 @@ namespace cnine{
       return *this;
     }
 
+    template<typename FILLTYPE>
+    CnineObject* spawn_real(const FILLTYPE& fill) const{
+      return new RscalarObj(nbu,fill);
+    }
+
+    CnineObject* spawn_zero() const{
+      return new CscalarObj(nbu,fill::zero);
+    }
+
 
   public: // ---- Conversions --------------------------------------------------------------------------------
 
@@ -87,6 +100,10 @@ namespace cnine{
 
   public: // ---- In-place operations ------------------------------------------------------------------------
 
+
+    void set_zero(){
+      CNINE_CSCALAR_IMPL::set_zero();
+    }
 
     void clear(){
       set_zero();
@@ -185,17 +202,30 @@ namespace cnine{
 
     
     string classname() const{
-      return "GEnet::CscalarObj";
+      return "cnine::CscalarObj";
     }
 
     string describe() const{
       return "Rscalar";
     } 
 
+    string str(const string indent="") const{
+      return CNINE_CSCALAR_IMPL::str(indent);
+    }
+
     friend ostream& operator<<(ostream& stream, const CscalarObj& x){
       stream<<x.str(); return stream;}
 
   };
+
+
+  inline CscalarObj& asCscalar(CnineObject* x){
+    assert(x); 
+    if(!dynamic_cast<CscalarObj*>(x))
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of CscalarA."<<endl;
+    assert(dynamic_cast<CscalarObj*>(x));
+    return static_cast<CscalarObj&>(*x);
+  }
 
 }
 
