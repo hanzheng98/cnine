@@ -121,6 +121,10 @@ namespace cnine{
       return *this;
     }
     
+    CnineObject* spawn_zero() const{
+      return new CtensorObj(nbu,fill::zero);
+    }
+
     /*
     Dobject* clone() const{
       return new CtensorObj(*this);
@@ -633,6 +637,16 @@ namespace cnine{
   inline complex<float> ConstCtensorObj_element::value() const{
     return obj.get_value(ix);
   }
+
+
+  inline CtensorObj& asCtensor(CnineObject* x){
+    assert(x); 
+    if(!dynamic_cast<CtensorObj*>(x))
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of CtensorObj."<<endl;
+    assert(dynamic_cast<CtensorObj*>(x));
+    return static_cast<CtensorObj&>(*x);
+  }
+
 
 
   // ---------------------------------------------------------------------------------------------------------

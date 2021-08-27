@@ -203,6 +203,15 @@ namespace cnine{
   };
 
   
+  inline RscalarObj& asRscalar(CnineObject* x){
+    assert(x); 
+    if(!dynamic_cast<RscalarObj*>(x))
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of RscalarObj."<<endl;
+    assert(dynamic_cast<RscalarObj*>(x));
+    return static_cast<RscalarObj&>(*x);
+  }
+
+  /*
   inline CNINE_RSCALAR_IMPL& asRscalar(CnineObject* x){
     assert(x); 
     if(!dynamic_cast<CNINE_RSCALAR_IMPL*>(x))
@@ -210,6 +219,7 @@ namespace cnine{
     assert(dynamic_cast<CNINE_RSCALAR_IMPL*>(x));
     return static_cast<CNINE_RSCALAR_IMPL&>(*x);
   }
+  */
 
   /*
   inline CNINE_RSCALAR_IMPL& asRscalarA(Cnode* x){

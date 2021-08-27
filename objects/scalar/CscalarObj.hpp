@@ -222,7 +222,7 @@ namespace cnine{
   inline CscalarObj& asCscalar(CnineObject* x){
     assert(x); 
     if(!dynamic_cast<CscalarObj*>(x))
-      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of CscalarA."<<endl;
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of CscalarObj."<<endl;
     assert(dynamic_cast<CscalarObj*>(x));
     return static_cast<CscalarObj&>(*x);
   }

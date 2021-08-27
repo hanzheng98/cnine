@@ -37,7 +37,7 @@ namespace cnine{
   class CtensorArrayA;
 
 
-  class CtensorA: public CnineBackendObject{
+  class CtensorA: public CnineObject, public CnineBackendObject{
   public:
 
     int k;
