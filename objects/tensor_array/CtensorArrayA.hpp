@@ -443,6 +443,23 @@ namespace cnine{
       CUDA_SAFE(cudaMemcpy(R.arrgc,arrgc+t,asize*sizeof(float),cudaMemcpyDeviceToDevice));
     }
 
+    void add_cell_to(CtensorA& R, const Gindex& aix) const{
+      assert(dev==R.dev);
+      int t=aix(strides);
+      if(dev==0){
+	float* p=arr+t;
+	float* pc=arrc+t;
+	for(int i=0; i<asize; i++) R.arr[i]+=p[i];
+	for(int i=0; i<asize; i++) R.arrc[i]+=pc[i];
+	return; 
+      }
+      if(dev==1){
+	const float alpha=1.0;
+	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrg+t, 1, R.arrg, 1));
+	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrgc+t, 1, R.arrgc, 1));
+      }
+    }
+
     void add_cell_into(CtensorA& R, const Gindex& aix) const{
       assert(dev==R.dev);
       int t=aix(strides);

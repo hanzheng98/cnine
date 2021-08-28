@@ -121,9 +121,20 @@ namespace cnine{
       return *this;
     }
     
-    CnineObject* spawn_zero() const{
-      return new CtensorObj(nbu,fill::zero);
+    template<typename FILLTYPE>
+    CnineObject* spawn(const FILLTYPE& fill) const{
+      return new CtensorObj(dims,nbu,fill,dev);
     }
+
+    template<typename FILLTYPE>
+    CnineObject* spawn(const FILLTYPE& fill, const int _dev) const{
+      return new CtensorObj(dims,nbu,fill,_dev);
+    }
+
+    CnineObject* spawn_zero() const{
+      return new CtensorObj(dims,nbu,fill::zero,dev);
+    }
+
 
     /*
     Dobject* clone() const{

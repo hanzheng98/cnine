@@ -1636,6 +1636,14 @@ namespace cnine{
   public: // ---- Into Operations ----------------------------------------------------------------------------
 
 
+    void add_norm2_to(CscalarA& r) const{
+      if(nbu==-1){
+	r.val+=inp(*this);
+      }else{
+	CNINE_UNIMPL();
+      }
+    }
+
     void add_norm2_into(CscalarA& r) const{
       if(nbu==-1){
 	r.val+=inp(*this);

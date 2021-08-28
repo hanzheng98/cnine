@@ -105,6 +105,23 @@ namespace cnine{
       return *this;
     }
     
+    template<typename FILLTYPE>
+    CnineObject* spawn(const FILLTYPE& fill) const{
+      return new CtensorArray(adims,cdims,fill,dev);
+    }
+
+    template<typename FILLTYPE>
+    CnineObject* spawn(const  Gdims _adims,const FILLTYPE& fill) const{
+      return new CtensorArray(_adims,cdims,fill,dev);
+    }
+
+    template<typename FILLTYPE>
+    CnineObject* spawn_cell(const FILLTYPE& fill) const{
+      return new CtensorObj(cdims,fill,dev);
+    }
+
+
+    
     CtensorArray(CtensorArray& x, const cnine::view_flag& flag):
       CNINE_CTENSORARRAY_IMPL(x,flag){}
 
@@ -497,6 +514,15 @@ namespace cnine{
 
 
   // ---- Post-class functions -------------------------------------------------------------------------------
+
+
+  inline CtensorArray& asCtensorArray(CnineObject* x){
+    assert(x); 
+    if(!dynamic_cast<CtensorArray*>(x))
+      cerr<<"cnine error: object is of type "<<x->classname()<<" instead of CtensorArray."<<endl;
+    assert(dynamic_cast<CtensorArray*>(x));
+    return static_cast<CtensorArray&>(*x);
+  }
 
 
 
