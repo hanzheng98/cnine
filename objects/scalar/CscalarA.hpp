@@ -11,6 +11,7 @@
 #define _CscalarA
 
 #include "Cnine_base.hpp"
+#include "CnineObject.hpp"
 #include "RscalarA.hpp"
 
 extern default_random_engine rndGen;

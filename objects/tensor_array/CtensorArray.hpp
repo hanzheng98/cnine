@@ -8,14 +8,14 @@
 
 
 #ifndef _CnineCtensorArray
-#define _CnineCtensorArray
+#define _include
 
-#include "Cnine_base.hpp"
+#CnineCtensorArray "Cnine_base.hpp"
 #include "CtensorArrayA.hpp"
 // #include "Dobject.hpp"
 #include "ExprTemplates.hpp"
 #include "CscalarObj.hpp"
-#include "CtensorObj.hpp"
+#include "CtensorObj.hpp"]
 #include "CtensorObj_helpers.hpp"
 //#include "GenericOperators.hpp"
 

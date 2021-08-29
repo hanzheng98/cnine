@@ -11,6 +11,7 @@
 #define _CnineCtensorA
 
 #include "Cnine_base.hpp"
+#include "CnineObject.hpp"
 #include "Gdims.hpp"
 #include "Gtensor.hpp"
 #include "CscalarA.hpp"
@@ -1636,7 +1637,7 @@ namespace cnine{
   public: // ---- Into Operations ----------------------------------------------------------------------------
 
 
-    void add_norm2_to(CscalarA& r) const{
+    void add_norm2_ito(CscalarA& r) const{
       if(nbu==-1){
 	r.val+=inp(*this);
       }else{

@@ -11,6 +11,7 @@
 #define _CnineCtensorArrayA
 
 #include "Cnine_base.hpp"
+#include "CnineObject.hpp"
 #include "Gdims.hpp"
 #include "Gtensor.hpp"
 #include "CscalarA.hpp"

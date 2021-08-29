@@ -11,6 +11,7 @@
 #define _CnineRtensorA
 
 #include "Cnine_base.hpp"
+#include "CnineObject.hpp"
 #include "Gdims.hpp"
 #include "Gtensor.hpp"
 #include "RscalarA.hpp"
@@ -37,7 +38,7 @@ namespace cnine{
   class RtensorArrayA;
 
 
-  class RtensorA: public CnineBackendObject{
+  class RtensorA: public CnineObject, public CnineBackendObject{
   public:
 
     int k;
