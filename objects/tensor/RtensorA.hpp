@@ -38,7 +38,7 @@ namespace cnine{
   class RtensorArrayA;
 
 
-  class RtensorA: public CnineObject, public CnineBackendObject{
+  class RtensorA: public CnineObject,   public CnineBackendObject{
   public:
 
     int k;
@@ -227,8 +227,8 @@ namespace cnine{
     
     RtensorA(const Gdims& _dims, const fill_zero& dummy, const int _dev=0): 
       RtensorA(_dims,_dev){
-      if(dev==0) std::fill(arr,arr+memsize,0);
-      if(dev==1) CUDA_SAFE(cudaMemset(arrg,0,memsize*sizeof(float)));
+      if(dev==0) std::fill(arr,arr+asize,0);
+      if(dev==1) CUDA_SAFE(cudaMemset(arrg,0,asize*sizeof(float)));
     }
 
     RtensorA(const Gdims& _dims, const fill_ones& dummy, const int _dev=0): 

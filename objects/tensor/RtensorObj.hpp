@@ -108,6 +108,9 @@ namespace cnine{
     RtensorObj(const RtensorObj& x, const fill_zero& dummy):
       RtensorObj(x.dims,x.get_nbu(),x.dev){}
       
+    RtensorObj(const RtensorObj& x, const fill_view& dummy):
+      CNINE_RTENSOR_IMPL(x,view_flag()){}
+      
     RtensorObj(RtensorObj&& x):
       CNINE_RTENSOR_IMPL(std::move(x)){};
 
@@ -163,6 +166,10 @@ namespace cnine{
 
     RtensorObj(const Gtensor<float>& x, const device& _dev=device(0)):
       CNINE_RTENSOR_IMPL(x,_dev.id()){}
+
+    as_shape_tmp<RtensorObj> as_shape(const Gdims& dims) const{
+      return as_shape_tmp<RtensorObj>(*this,dims);
+    }
 
 
   public: // ---- Access -------------------------------------------------------------------------------------

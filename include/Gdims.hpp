@@ -250,6 +250,15 @@ namespace cnine{
   inline Gdims dims(const int i0, const int i1, const int i2, const int i3) {return Gdims(i0,i1,i2,i3);}
   inline Gdims dims(const int i0, const int i1, const int i2, const int i3, const int i4) {return Gdims(i0,i1,i2,i3,i4);}
 
+
+  template<typename OBJ>
+  class as_shape_tmp: public OBJ{
+  public:
+    as_shape_tmp(const OBJ& x, const Gdims& _dims): OBJ(x,fill::view){
+      OBJ::reshape(_dims);}
+  };
+
+
 }
 
 
