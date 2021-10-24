@@ -4,7 +4,7 @@ from setuptools import setup
 from torch.utils.cpp_extension import CppExtension, BuildExtension, CUDAExtension
 
 os.environ['CUDA_HOME']='/usr/local/cuda'
-os.environ["CC"] = "clang"
+#os.environ["CC"] = "clang"
 
 CUDA_HOME='/usr/local/cuda'
 
@@ -18,7 +18,7 @@ ext_modules=[CUDAExtension('cnine', ['cnine_py.cpp'],
                                  runtime_libraries=['cudart'],
                                  libraries=['cudart','dl'],
                                  extra_compile_args = {'nvcc': ['-D_WITH_CUDA'],
-                                                       'cxx': ['-Wno-sign-compare','-Wno-deprecated-declarations',
+                                                       'cxx': ['-std=c++14', '-Wno-sign-compare','-Wno-deprecated-declarations',
                                                                '-D_WITH_CUDA']},
                                  depends=['setup.py'])], 
       cmdclass={'build_ext': BuildExtension}
