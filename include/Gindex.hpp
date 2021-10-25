@@ -28,6 +28,10 @@ namespace cnine{
     Gindex(const fill_zero& dummy){
     }
 
+    Gindex(const vector<int>& x){
+      for(auto p:x) if(p>=0) push_back(p);
+    }
+
     Gindex(const initializer_list<int>& list): vector<int>(list){}
 
     Gindex(const int i0):

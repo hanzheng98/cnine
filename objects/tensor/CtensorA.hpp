@@ -179,7 +179,7 @@ namespace cnine{
 
     CtensorA(const int _k, const Gdims& _dims, const vector<int>_strides, const int _asize, 
       const int _memsize, const int _cst, const int _dev=0):
-      k(_k), dims(_dims), strides(_strides), asize(_asize), memsize(_memsize), cst(_cst), dev(_dev){
+      k(_k), dims(_dims), dev(_dev), strides(_strides), asize(_asize), memsize(_memsize), cst(_cst){
 
       if(dev==0){
 	arr=new float[memsize];
@@ -202,8 +202,8 @@ namespace cnine{
     
     CtensorA(const int _k, const Gdims& _dims, const int _nbu, const vector<int>& _strides, const int _asize, 
       const int _memsize, const int _dev, float* _arr, float* _arrc, const view_flag& flag):
-      k(_k), dims(_dims), nbu(_nbu), strides(_strides), asize(_asize), memsize(_memsize), cst(_asize), dev(_dev), 
-      arr(_arr), arrc(_arrc), is_view(true){
+      k(_k), dims(_dims), nbu(_nbu), dev(_dev), strides(_strides), asize(_asize), memsize(_memsize), cst(_asize), 
+      is_view(true), arr(_arr), arrc(_arrc){
     }
     
 
@@ -1073,13 +1073,15 @@ namespace cnine{
 	return; 
       }
       if(dev==1){
-	const float cr = std::real(c);
-	const float ci = std::imag(c);
-	const float mci = -std::imag(c);
-	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &cr, arrg, 1, arrg, 1));
-	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &mci, arrgc, 1, arrg, 1));
-	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &cr, arrgc, 1, arrgc, 1));
-	CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &ci, arrg, 1, arrgc, 1));
+	IFCUDA(
+	       const float cr = std::real(c);
+	       const float ci = std::imag(c);
+	       const float mci = -std::imag(c);
+	       CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &cr, arrg, 1, arrg, 1));
+	       CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &mci, arrgc, 1, arrg, 1));
+	       CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &cr, arrgc, 1, arrgc, 1));
+	       CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &ci, arrg, 1, arrgc, 1));
+	)
       }
     }
 
@@ -1103,10 +1105,12 @@ namespace cnine{
 	return R;
       }
       CtensorA R(dims,fill::zero,dev);
-      const float alpha = 1.0;
-      const float malpha = -1.0;
-      CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrg, 1, R.arrg, 1));
-      CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &malpha, arrgc, 1, R.arrgc, 1));
+      IFCUDA(
+	     const float alpha = 1.0;
+	     const float malpha = -1.0;
+	     CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrg, 1, R.arrg, 1));
+	     CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &malpha, arrgc, 1, R.arrgc, 1));
+	     )
       return R;
     }
 
@@ -1118,10 +1122,12 @@ namespace cnine{
 	return R;
       }
       CtensorA* R=new CtensorA(dims,fill::zero,dev);
-      const float alpha = 1.0;
-      const float malpha = -1.0;
-      CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrg, 1, R->arrg, 1));
-      CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &malpha, arrgc, 1, R->arrgc, 1));
+      IFCUDA(
+	     const float alpha = 1.0;
+	     const float malpha = -1.0;
+	     CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &alpha, arrg, 1, R->arrg, 1));
+	     CUBLAS_SAFE(cublasSaxpy(cnine_cublas, asize, &malpha, arrgc, 1, R->arrgc, 1));
+	     )
       return R;
     }
 
