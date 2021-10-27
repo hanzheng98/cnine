@@ -129,13 +129,20 @@ namespace cnine{
   // ---- Other flags ---------------------------------------------------------------------------------------
 
 
-  struct view_flag{};
+  class view_flag{
+  public:
+    view_flag(){}
+  };
 
   namespace flag{
     static const view_flag view;
   }
 
-  struct nowarn_flag{};
+  class nowarn_flag{
+  public:
+    nowarn_flag(){}
+  };
+
   static const nowarn_flag nowarn;
 
 

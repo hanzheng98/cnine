@@ -33,19 +33,19 @@ namespace cnine{
   public: // ---- Public Constructors ------------------------------------------------------------------------
 
 
-    RtensorObj(const Gdims& _dims, const int _dev=0):
-      CNINE_RTENSOR_IMPL(_dims,fill_raw(),_dev){}
+    //RtensorObj(const Gdims& _dims, const int _dev=0): // this caused ambiguous overload
+      //CNINE_RTENSOR_IMPL(_dims,_dev){}
 
-    RtensorObj(const Gdims& _dims, const int _nbu, const int _dev):
-      CNINE_RTENSOR_IMPL(_dims,_nbu,_dev){}
+    //RtensorObj(const Gdims& _dims, const int _nbu, const int _dev): // this caused ambiguous overload 
+    //CNINE_RTENSOR_IMPL(_dims,_nbu,_dev){}
 
     template<typename FILLTYPE, typename = typename std::enable_if<std::is_base_of<fill_pattern, FILLTYPE>::value, FILLTYPE>::type>
     RtensorObj(const Gdims& _dims, const FILLTYPE& fill, const int _dev=0):
       CNINE_RTENSOR_IMPL(_dims,fill,_dev){}
 
-    template<typename FILLTYPE, typename = typename std::enable_if<std::is_base_of<fill_pattern, FILLTYPE>::value, FILLTYPE>::type>
-    RtensorObj(const Gdims& _dims, const int _nbu, const FILLTYPE& fill, const int _dev=0):
-      CNINE_RTENSOR_IMPL(_dims,_nbu,fill,_dev){}
+    //template<typename FILLTYPE, typename = typename std::enable_if<std::is_base_of<fill_pattern, FILLTYPE>::value, FILLTYPE>::type>
+    //RtensorObj(const Gdims& _dims, const int _nbu, const FILLTYPE& fill, const int _dev=0):
+    //CNINE_RTENSOR_IMPL(_dims,_nbu,fill,_dev){}
     
     RtensorObj(const Gdims& _dims, std::function<float(const int i, const int j)> fn):
       CNINE_RTENSOR_IMPL(_dims,fn){}
