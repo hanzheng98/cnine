@@ -92,7 +92,7 @@ namespace cnine{
       RtensorA(Gdims({0})){}
 
 
-  protected: // ---- Constructors -----------------------------------------------------------------------------
+  // ---- Constructors -----------------------------------------------------------------------------
 
     
     RtensorA(const Gdims& _dims, const int _dev=0): 
