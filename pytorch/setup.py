@@ -9,6 +9,8 @@ os.environ["CC"] = "clang"
 #CUDA_HOME='/usr/local/cuda'
 #print(torch.cuda.is_available())
 
+#CXXFLAGS += '-D_GLIBCXX_USE_CXX11_ABI=0'
+
 setup(name='cnine',
 ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                  include_dirs=['/usr/local/cuda/include',
@@ -21,7 +23,9 @@ ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                                        'cxx': ['-std=c++14',
                                                                '-Wno-sign-compare',
                                                                '-Wno-deprecated-declarations',
-                                                               '-Wno-unused-variable'
+                                                               '-Wno-unused-variable',
+                                                               '-Wno-reorder-ctor'
+#                                                               '-D_GLIBCXX_USE_CXX11_ABI=0'
                                                                ]},
                                  depends=['setup.py'])], 
       cmdclass={'build_ext': BuildExtension}

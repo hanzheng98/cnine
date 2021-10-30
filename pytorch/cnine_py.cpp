@@ -13,6 +13,8 @@
 
 #include "Gdims.hpp"
 #include "Gindex.hpp"
+#include "RscalarObj.hpp"
+#include "RtensorObj.hpp"
 #include "CscalarObj.hpp"
 #include "CtensorObj.hpp"
 
@@ -25,6 +27,7 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
   using namespace cnine;
   namespace py=pybind11;
+
 
   pybind11::class_<fill_raw>(m,"fill_raw")
     .def(pybind11::init<>());
@@ -46,16 +49,75 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
     .def("__str__",&Gdims::str);
 
 
+
   pybind11::class_<Gindex>(m,"gindex")
     .def(pybind11::init<vector<int> >())
     .def("str",&Gindex::str)
     .def("__str__",&Gindex::str);
 
 
+
+  pybind11::class_<RscalarObj>(m,"rscalar")
+    .def(pybind11::init<>())
+    .def("str",&RscalarObj::str,py::arg("indent")="")
+    .def("__str__",&RscalarObj::str,py::arg("indent")="");
+
+
+
   pybind11::class_<CscalarObj>(m,"cscalar")
     .def(pybind11::init<>())
     .def("str",&CscalarObj::str,py::arg("indent")="")
     .def("__str__",&CscalarObj::str,py::arg("indent")="");
+
+
+
+  pybind11::class_<RtensorObj>(m,"rtensor")
+
+    .def(pybind11::init<const Gdims&>())
+    .def(pybind11::init<const Gdims&, const fill_raw&>())
+    .def(pybind11::init<const Gdims&, const fill_zero&>())
+    .def(pybind11::init<const Gdims&, const fill_ones&>())
+    .def(pybind11::init<const Gdims&, const fill_identity&>())
+    .def(pybind11::init<const Gdims&, const fill_gaussian&>())
+    .def(pybind11::init<const Gdims&, const fill_sequential&>())
+
+    .def_static("zero",static_cast<RtensorObj (*)(const Gdims&,const int, const int)>(&RtensorObj::zero))
+    .def_static("ones",static_cast<RtensorObj (*)(const Gdims&,const int, const int)>(&RtensorObj::ones))
+    .def_static("identity",static_cast<RtensorObj (*)(const Gdims&,const int, const int)>(&RtensorObj::identity))
+    .def_static("gaussian",static_cast<RtensorObj (*)(const Gdims&,const int, const int)>(&RtensorObj::gaussian))
+    .def_static("sequential",static_cast<RtensorObj (*)(const Gdims&,const int, const int)>(&RtensorObj::sequential))
+
+    .def("get_k",&RtensorObj::get_k)
+    .def("get_dims",&RtensorObj::get_dims)
+    .def("get_dim",&RtensorObj::get_dim)
+
+    .def("get",static_cast<RscalarObj(RtensorObj::*)(const Gindex& )const>(&RtensorObj::get))
+    .def("get",static_cast<RscalarObj(RtensorObj::*)(const int)const>(&RtensorObj::get))
+    .def("get",static_cast<RscalarObj(RtensorObj::*)(const int, const int)const>(&RtensorObj::get))
+    .def("get",static_cast<RscalarObj(RtensorObj::*)(const int, const int, const int)const>(&RtensorObj::get))
+
+    .def("set",static_cast<RtensorObj&(RtensorObj::*)(const Gindex&, const RscalarObj&)>(&RtensorObj::set))
+    .def("set",static_cast<RtensorObj&(RtensorObj::*)(const int, const RscalarObj&)>(&RtensorObj::set))
+    .def("set",static_cast<RtensorObj&(RtensorObj::*)(const int, const int, const RscalarObj&)>(&RtensorObj::set))
+    .def("set",static_cast<RtensorObj&(RtensorObj::*)(const int, const int, const int, const RscalarObj&)>(&RtensorObj::set))
+
+    .def("get_value",static_cast<float(RtensorObj::*)(const Gindex& )const>(&RtensorObj::get_value))
+    .def("get_value",static_cast<float(RtensorObj::*)(const int)const>(&RtensorObj::get_value))
+    .def("get_value",static_cast<float(RtensorObj::*)(const int, const int)const>(&RtensorObj::get_value))
+    .def("get_value",static_cast<float(RtensorObj::*)(const int, const int, const int)const>(&RtensorObj::get_value))
+
+    .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const Gindex&, const float)>(&RtensorObj::set_value))
+    .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const int, const float)>(&RtensorObj::set_value))
+    .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const int, const int, const float)>(&RtensorObj::set_value))
+    .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const int, const int, const int, const float)>(&RtensorObj::set_value))
+
+    .def("transp",&RtensorObj::transp)
+
+    //.def("__getitem__",static_cast<CscalarObj(RtensorObj::*)(const int, const int)const>(&RtensorObj::get))
+
+    .def("str",&RtensorObj::str,py::arg("indent")="")
+    .def("__str__",&RtensorObj::str,py::arg("indent")="");
+
 
 
   pybind11::class_<CtensorObj>(m,"ctensor")
