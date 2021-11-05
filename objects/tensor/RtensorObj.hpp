@@ -380,7 +380,7 @@ namespace cnine{
     }
     */
 
-    RtensorObj plus(const RtensorObj& x){
+    RtensorObj plus(const RtensorObj& x) const{
       return RtensorObj(CNINE_RTENSOR_IMPL::plus(x));
     }
 

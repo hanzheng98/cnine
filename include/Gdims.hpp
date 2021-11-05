@@ -82,6 +82,10 @@ namespace cnine{
       return (*this)[i];
     }
 
+    void set(const int i, const int x){
+      (*this)[i]=x;
+    }
+
     int asize() const{
       int t=1; for(int i=0; i<size(); i++) t*=(*this)[i];
       return t;

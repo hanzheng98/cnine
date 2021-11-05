@@ -386,7 +386,7 @@ namespace cnine{
       return CtensorObj(CNINE_CTENSOR_IMPL::herm());
     }
 
-    CtensorObj plus(const CtensorObj& x){
+    CtensorObj plus(const CtensorObj& x) const{
       return CtensorObj(CNINE_CTENSOR_IMPL::plus(x));
     }
 
