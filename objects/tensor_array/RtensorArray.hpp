@@ -171,6 +171,10 @@ namespace cnine{
       return dev;
     }
 
+    RtensorObj get_cell(const Gindex& aix) const{
+      return CNINE_RTENSORARRAY_IMPL::get_cell(aix);
+    }
+
 
   public: // -------------------------------------------------------------------------------------------------
 

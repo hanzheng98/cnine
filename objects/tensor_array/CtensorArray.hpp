@@ -10,12 +10,12 @@
 #ifndef _CnineCtensorArray
 #define _include
 
-#CnineCtensorArray "Cnine_base.hpp"
+#include "Cnine_base.hpp"
 #include "CtensorArrayA.hpp"
 // #include "Dobject.hpp"
 #include "ExprTemplates.hpp"
 #include "CscalarObj.hpp"
-#include "CtensorObj.hpp"]
+#include "CtensorObj.hpp"
 #include "CtensorObj_helpers.hpp"
 //#include "GenericOperators.hpp"
 

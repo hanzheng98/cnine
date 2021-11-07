@@ -14,7 +14,8 @@ os.environ["CC"] = "clang"
 setup(name='cnine',
 ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                  include_dirs=['/usr/local/cuda/include',
-                                               '../include','../objects/scalar','../objects/tensor'],
+                                               '../include','../objects/scalar','../objects/tensor',
+                                               '../objects/tensor_array','../objects/tensor_array/cell_ops'],
 #                                 library_dirs=['/usr/local/cuda/lib'],
 #                                 runtime_libraries=['cudart'],
 #                                 libraries=['cudart','dl'],
@@ -27,7 +28,8 @@ ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                                                '-Wno-reorder-ctor'
 #                                                               '-D_GLIBCXX_USE_CXX11_ABI=0'
                                                                ]},
-                                 depends=['setup.py','cnine_py.cpp','rtensor_py.cpp','ctensor_py.cpp'])], 
+                                 depends=['setup.py','cnine_py.cpp','rtensor_py.cpp','ctensor_py.cpp',
+                                          'rtensorarr_py.cpp','ctensorarr_py.cpp'])], 
       cmdclass={'build_ext': BuildExtension}
       )
 

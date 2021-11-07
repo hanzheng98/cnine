@@ -13,11 +13,14 @@
 
 #include "Gdims.hpp"
 #include "Gindex.hpp"
+
 #include "RscalarObj.hpp"
 #include "RtensorObj.hpp"
+#include "RtensorArray.hpp"
+
 #include "CscalarObj.hpp"
 #include "CtensorObj.hpp"
-
+#include "CtensorArray.hpp"
 
 //std::default_random_engine rndGen;
 #include "Cnine_base.cpp"
@@ -78,56 +81,8 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   #include "rtensor_py.cpp"
   #include "ctensor_py.cpp"
 
-  /*
-  pybind11::class_<CtensorObj>(m,"ctensor")
-
-    .def(pybind11::init<const Gdims&>())
-    .def(pybind11::init<const Gdims&, const fill_raw&>())
-    .def(pybind11::init<const Gdims&, const fill_zero&>())
-    .def(pybind11::init<const Gdims&, const fill_ones&>())
-    .def(pybind11::init<const Gdims&, const fill_identity&>())
-    .def(pybind11::init<const Gdims&, const fill_gaussian&>())
-    .def(pybind11::init<const Gdims&, const fill_sequential&>())
-
-    .def_static("zero",static_cast<CtensorObj (*)(const Gdims&,const int, const int)>(&CtensorObj::zero))
-    .def_static("ones",static_cast<CtensorObj (*)(const Gdims&,const int, const int)>(&CtensorObj::ones))
-    .def_static("identity",static_cast<CtensorObj (*)(const Gdims&,const int, const int)>(&CtensorObj::identity))
-    .def_static("gaussian",static_cast<CtensorObj (*)(const Gdims&,const int, const int)>(&CtensorObj::gaussian))
-    .def_static("sequential",static_cast<CtensorObj (*)(const Gdims&,const int, const int)>(&CtensorObj::sequential))
-
-    .def("get_k",&CtensorObj::get_k)
-    .def("get_dims",&CtensorObj::get_dims)
-    .def("get_dim",&CtensorObj::get_dim)
-
-    .def("get",static_cast<CscalarObj(CtensorObj::*)(const Gindex& )const>(&CtensorObj::get))
-    .def("get",static_cast<CscalarObj(CtensorObj::*)(const int)const>(&CtensorObj::get))
-    .def("get",static_cast<CscalarObj(CtensorObj::*)(const int, const int)const>(&CtensorObj::get))
-    .def("get",static_cast<CscalarObj(CtensorObj::*)(const int, const int, const int)const>(&CtensorObj::get))
-
-    .def("set",static_cast<CtensorObj&(CtensorObj::*)(const Gindex&, const CscalarObj&)>(&CtensorObj::set))
-    .def("set",static_cast<CtensorObj&(CtensorObj::*)(const int, const CscalarObj&)>(&CtensorObj::set))
-    .def("set",static_cast<CtensorObj&(CtensorObj::*)(const int, const int, const CscalarObj&)>(&CtensorObj::set))
-    .def("set",static_cast<CtensorObj&(CtensorObj::*)(const int, const int, const int, const CscalarObj&)>(&CtensorObj::set))
-
-    .def("get_value",static_cast<complex<float>(CtensorObj::*)(const Gindex& )const>(&CtensorObj::get_value))
-    .def("get_value",static_cast<complex<float>(CtensorObj::*)(const int)const>(&CtensorObj::get_value))
-    .def("get_value",static_cast<complex<float>(CtensorObj::*)(const int, const int)const>(&CtensorObj::get_value))
-    .def("get_value",static_cast<complex<float>(CtensorObj::*)(const int, const int, const int)const>(&CtensorObj::get_value))
-
-    .def("set_value",static_cast<CtensorObj&(CtensorObj::*)(const Gindex&, const complex<float>)>(&CtensorObj::set_value))
-    .def("set_value",static_cast<CtensorObj&(CtensorObj::*)(const int, const complex<float>)>(&CtensorObj::set_value))
-    .def("set_value",static_cast<CtensorObj&(CtensorObj::*)(const int, const int, const complex<float>)>(&CtensorObj::set_value))
-    .def("set_value",static_cast<CtensorObj&(CtensorObj::*)(const int, const int, const int, const complex<float>)>(&CtensorObj::set_value))
-
-    .def("conj",&CtensorObj::conj)
-    .def("transp",&CtensorObj::transp)
-    .def("herm",&CtensorObj::herm)
-
-    //.def("__getitem__",static_cast<CscalarObj(CtensorObj::*)(const int, const int)const>(&CtensorObj::get))
-
-    .def("str",&CtensorObj::str,py::arg("indent")="")
-    .def("__str__",&CtensorObj::str,py::arg("indent")="");
-  */
+  #include "rtensorarr_py.cpp"
+  #include "ctensorarr_py.cpp"
 
 
 }

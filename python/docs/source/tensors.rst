@@ -44,7 +44,26 @@ The number of tensor dimensions and the dimensions themselves can be read out as
   >>> print(A.get_dim(2))
   4
 
+=================
+Tensor dimensions
+=================
 
+The number of tensor dimensions, the size of a specific dimenion and the ``gdims`` object corresponding 
+to all the dimensions are accessed as follows.
+
+
+.. code-block:: python
+
+  >>> A=rtensor.zero([4,4])
+  >>> A.get_ndims()
+  2
+  >>> A.get_dim(0)
+  4
+  >>> dims=A.get_dims()
+  >>> dims[0]
+  4
+
+ 
 =========================
 Accessing tensor elements
 =========================
@@ -157,6 +176,22 @@ each element of the tensor.
   [ 0.097221 0 0 1.16493 ]
 
 
+==========
+Transposes
+==========
+
+The ``transp`` method returns the transpose of a matrix.
+
+.. code-block:: python
+
+  >>> A=rtensor.sequential([4,4])
+  >>> print(A.transp())
+  [ 0 4 8 12 ]
+  [ 1 5 9 13 ]
+  [ 2 6 10 14 ]
+  [ 3 7 11 15 ]
+
+
 ====================
 Slices and reshaping
 ====================
@@ -176,20 +211,22 @@ equal to c. ``reshape`` reinterprets the tensor as a tensor of a different shape
   [ 8 9 10 11 12 13 14 15 ]
 
 
-==========
-Transposes
-==========
+=================
+GPU functionality
+=================
 
-The ``transp`` method returns the transpose of a matrix.
+Tensors can moved back and forth between the host (CPU) and the GPU with the `to` method. 
 
 .. code-block:: python
 
   >>> A=rtensor.sequential([4,4])
-  >>> print(A.transp())
-  [ 0 4 8 12 ]
-  [ 1 5 9 13 ]
-  [ 2 6 10 14 ]
-  [ 3 7 11 15 ]
+  >>> B=A.to(1) # Create a copy of A on the first GPU (GPU0)
+  >>> C=B.to(0) # Move B back to the host 
+
+Almost all operations that `cnine` offers on the host are also available on the GPU. 
+In general, if the operands are on the host, the operation will be performed on the host and 
+the result is placed on the host. Conversely, if the operands are on the GPU, 
+the operation will be performed on the GPU and the result placed on the same GPU.
 
 
 ================

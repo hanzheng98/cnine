@@ -152,6 +152,20 @@ namespace cnine{
       if(dev==1) CUDA_SAFE(cudaMemset(arrg,0,memsize*sizeof(float)));
     }
 
+    RtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const fill_identity& dummy, const int _dev=0): 
+      RtensorArrayA(_adims,_cdims,_dev){
+      if(dev==0) std::fill(arr,arr+memsize,0);
+      if(dev==1) CUDA_SAFE(cudaMemset(arrg,0,memsize*sizeof(float)));
+      CNINE_UNIMPL()
+    }
+  
+    RtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const int _nbu, const fill_identity& dummy, const int _dev=0): 
+      RtensorArrayA(_adims,_cdims.prepend(_nbu),_dev){
+      if(dev==0) std::fill(arr,arr+memsize,0);
+      if(dev==1) CUDA_SAFE(cudaMemset(arrg,0,memsize*sizeof(float)));
+      CNINE_UNIMPL()
+    }
+
     RtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const fill_ones& dummy, const int _dev=0): 
       RtensorArrayA(_adims,_cdims,fill::raw,0){
       std::fill(arr,arr+cst,1);

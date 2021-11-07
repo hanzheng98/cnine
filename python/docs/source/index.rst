@@ -15,6 +15,7 @@ cnine
 | 
 
 .. include:: tensors.rst
+.. include:: tensor_arrays.rst
 
 
 

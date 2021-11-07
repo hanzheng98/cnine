@@ -16,6 +16,7 @@ Installing cnine requires the following:
 
 #. C++11 or higher
 #. Python
+#. Pybind11 
 
 To install cnine follow these steps:
 

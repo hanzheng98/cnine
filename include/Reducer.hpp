@@ -63,7 +63,7 @@ namespace cnine{
       while(e<n){e*=2;s++;}
       e/=2; 
 
-      float* buf;
+      float* buf=nullptr;
       float* bufc;
       CUDA_SAFE(cudaMalloc((void **)&buf, 2*e*cellstride*sizeof(float)));
       bufc=buf+e*cellstride;
