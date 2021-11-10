@@ -450,6 +450,48 @@ namespace cnine{
       return R;
     }
 
+#ifdef _WITH_ATEN
+
+    RtensorA(const at::Tensor& T){
+      assert(typeid(T.type().scalarType())==typeid(float));
+      T.contiguous();
+      
+      k=T.dim();
+      dims=Gdims(k,fill_raw());
+      for(int i=0; i<k ; i++){
+	dims[i]=T.size(i);
+      }
+      strides.resize(k);
+      strides[k-1]=1;
+      for(int i=k-2; i>=0; i--)
+	strides[i]=strides[i+1]*dims[i+1];
+      asize=strides[0]*dims[0];
+      cst=roundup(asize,32); 
+      memsize=cst; 
+
+      dev=T.type().is_cuda();
+      if(dev==0){
+	arr=new float[memsize];
+      }
+
+      if(dev==1){
+	CUDA_SAFE(cudaMalloc((void **)&arrg, memsize*sizeof(float)));
+      }
+
+      if(dev==0) std::copy(T.data<float>(),T.data<float>()+asize,arr);
+      if(dev==1) CUDA_SAFE(cudaMemcpy(arrg,T.data<float>(),asize*sizeof(TYPE),cudaMemcpyDeviceToDevice));
+    }
+
+    at::Tensor torch() const{
+      assert(dev==0);
+      vector<int64_t> v(k); for(int i=0; i<2; i++) v[i]=dims[i];
+      at::Tensor R(at::zeros(v,torch::CPU(at::kFloat))); 
+      std::copy(arr,arr+asize,R.data<float>());
+      return R;
+    }
+
+#endif 
+
 
   public: // ---- Transport -----------------------------------------------------------------------------------
 

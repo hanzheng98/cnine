@@ -8,6 +8,9 @@ pybind11::class_<RtensorObj>(m,"rtensor")
   .def(pybind11::init<const Gdims&, const fill_gaussian&>())
   .def(pybind11::init<const Gdims&, const fill_sequential&>())
 
+  .def(pybind11::init<const at::Tensor&>())
+  .def("torch",&RtensorObj::torch)
+
   .def_static("zero",static_cast<RtensorObj (*)(const Gdims&, const int, const int)>(&RtensorObj::zero))
   .def_static("zero",[](const Gdims& dims, const int dev){return RtensorObj::zero(dims,-1,dev);},
     py::arg("dims"),py::arg("device")=0)
@@ -108,7 +111,8 @@ pybind11::class_<RtensorObj>(m,"rtensor")
   .def("to",&RtensorObj::to_device)
 
   .def("str",&RtensorObj::str,py::arg("indent")="")
-  .def("__str__",&RtensorObj::str,py::arg("indent")="");
+  .def("__str__",&RtensorObj::str,py::arg("indent")="")
+  .def("__repr__",&RtensorObj::str,py::arg("indent")="");
 
 
 
@@ -124,5 +128,4 @@ m.def("ReLU",[](const RtensorObj& x, const float c){
     RtensorObj R(x.get_dims(),x.get_nbu(),fill::zero);
     R.add_ReLU(x,c);
     return R;});
-
 

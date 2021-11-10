@@ -7,7 +7,7 @@
 //  Public License v. 2.0. If a copy of the MPL was not distributed
 //  with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-//#include <torch/torch.h>
+#include <torch/torch.h>
 #include <pybind11/stl.h>
 #include <pybind11/complex.h>
 
@@ -86,3 +86,22 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
 
 }
+
+
+/*
+namespace pybind11{
+  namespace detail{ 
+
+    template <> struct type_caster<cnine::RtensorObj>{
+
+      static handle cast(cnine::RtensorObj obj){
+	vector<int64_t> v(2); for(int i=0; i<2; i++) v[i]=4;
+	at::Tensor R(at::zeros(v,torch::CPU(at::kFloat))); 
+	return R;
+      }
+    };
+
+  }
+
+}
+*/

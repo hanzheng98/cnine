@@ -25,7 +25,8 @@ ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                                                '-Wno-sign-compare',
                                                                '-Wno-deprecated-declarations',
                                                                '-Wno-unused-variable',
-                                                               '-Wno-reorder-ctor'
+                                                               '-Wno-reorder-ctor',
+                                                               '-D_WITH_ATEN'
 #                                                               '-D_GLIBCXX_USE_CXX11_ABI=0'
                                                                ]},
                                  depends=['setup.py','cnine_py.cpp','rtensor_py.cpp','ctensor_py.cpp',
