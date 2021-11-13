@@ -3,9 +3,9 @@ Tensors
 *******
 
 
-The core data type in cnine are real and complex multidimensional arrays. 
+The core data types in cnine are real and complex multidimensional arrays. 
 The corresponding classes are ``rtensor`` and ``ctensor``. 
-Currently, to facilitate GP-Gpu operations only single precision arithmetic is supported. 
+Currently, to facilitate GP-GPU operations, only single precision arithmetic is supported. 
 
 We describe basic tensor functionality for the ``rtensor`` class.  
 The ``ctensor`` class's interface is analogous. 
@@ -215,7 +215,7 @@ equal to c. ``reshape`` reinterprets the tensor as a tensor of a different shape
 GPU functionality
 =================
 
-Tensors can moved back and forth between the host (CPU) and the GPU with the `to` method. 
+Tensors can moved back and forth between the host (CPU) and the GPU with the ``to`` method. 
 
 .. code-block:: python
 
@@ -274,3 +274,20 @@ and conjugate transpose (Hermitian conjugate) of the tensor.
   [ (-1.66043,0.546571) (-0.688081,0.0384917) (0.0757219,-0.194947) (1.47339,0.485144) ]
   [ (0.097221,0.370271) (-0.89237,1.12408) (-0.228782,-1.73664) (1.16493,-0.882195) ]
 
+
+=================
+Storage details
+=================
+
+`cnine` is designed to be able to switch between different C++ backend classes for its core data types. 
+The default backend class for real tensors is ``RtensorA`` and for complex tensors is ``CtensorA``. 
+``RtensorA`` stores a tensor of dimensions :math:`d_1\times\ldots\times d_k` as a single contiguous array of 
+:math:`d_1 \ldots d_k` floating point numbers in row major order. 
+``CtensorA`` stores a complex tensor as a single array consisting of the 
+real part of the tensor followed by the imaginary part. 
+To facilitate memory access on the GPU the offset of the imaginary part is rounded up to the nearest 
+multiple of 128 bytes. 
+
+A tensor object's header, including information about tensor dimensions, strides, etc., is always resident on 
+the host. When a tensor array is moved to the GPU, only the array containing the actual tensor entries 
+is moved to the  GPU's global memory. 

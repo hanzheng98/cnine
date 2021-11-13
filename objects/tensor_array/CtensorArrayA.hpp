@@ -182,15 +182,17 @@ namespace cnine{
       if(dev>0) move_to_device(_dev);
     }
 
-    /*
     CtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const fill_identity& dummy, const int _dev=0): 
-      CtensorArrayA(_adims,_cdims,-1,CtensorArrayA_cop::setIdentity(),_dev){
+      CtensorArrayA(_adims,_cdims,-1,fill_zero(),_dev){
+      CNINE_UNIMPL();
+      //CtensorArrayA(_adims,_cdims,-1,CtensorArrayA_cop::setIdentity(),_dev){
     }
 
     CtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const int _nbu, const fill_identity& dummy, const int _dev=0): 
-      CtensorArrayA(_adims,_cdims,_nbu,CtensorArrayA_cop::setIdentity(),_dev){
+      CtensorArrayA(_adims,_cdims,_nbu,fill_zero(),_dev){
+      CNINE_UNIMPL();
+      //CtensorArrayA(_adims,_cdims,_nbu,CtensorArrayA_cop::setIdentity(),_dev){
     }
-    */
 
     CtensorArrayA(const Gdims& _adims, const Gdims& _cdims, const fill_gaussian& dummy, const int _dev=0):
       CtensorArrayA(_adims,_cdims,fill::raw,0){

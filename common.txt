@@ -1,4 +1,4 @@
-include $(ROOTDIR)/options.txt
+include $(ROOTDIR)/config.txt
 
 INCLUDEDIR=$(ROOTDIR)/include
 SCALARDIR=$(ROOTDIR)/objects/scalar

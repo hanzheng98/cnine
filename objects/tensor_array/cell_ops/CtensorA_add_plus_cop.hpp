@@ -46,6 +46,10 @@ namespace cnine{
 #endif
     }
 
+    static string shortname(){
+      return "add_plus";
+    }
+
   };
 
 }

@@ -16,6 +16,7 @@ cnine
 
 .. include:: tensors.rst
 .. include:: tensor_arrays.rst
+.. include:: cell_maps.rst
 
 
 

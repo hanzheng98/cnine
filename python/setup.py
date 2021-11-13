@@ -5,6 +5,7 @@ from torch.utils.cpp_extension import CppExtension, BuildExtension, CUDAExtensio
 
 #os.environ['CUDA_HOME']='/usr/local/cuda'
 os.environ["CC"] = "clang"
+cwd = os.getcwd()
 
 #CUDA_HOME='/usr/local/cuda'
 #print(torch.cuda.is_available())
@@ -14,8 +15,12 @@ os.environ["CC"] = "clang"
 setup(name='cnine',
 ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                  include_dirs=['/usr/local/cuda/include',
-                                               '../include','../objects/scalar','../objects/tensor',
-                                               '../objects/tensor_array','../objects/tensor_array/cell_ops'],
+                                               cwd+'/../include',
+                                               cwd+'/../include/cmaps',
+                                               cwd+'/../objects/scalar',
+                                               cwd+'/../objects/tensor',
+                                               cwd+'/../objects/tensor_array',
+                                               cwd+'/../objects/tensor_array/cell_ops'],
 #                                 library_dirs=['/usr/local/cuda/lib'],
 #                                 runtime_libraries=['cudart'],
 #                                 libraries=['cudart','dl'],
@@ -30,7 +35,7 @@ ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
 #                                                               '-D_GLIBCXX_USE_CXX11_ABI=0'
                                                                ]},
                                  depends=['setup.py','cnine_py.cpp','rtensor_py.cpp','ctensor_py.cpp',
-                                          'rtensorarr_py.cpp','ctensorarr_py.cpp'])], 
+                                          'rtensorarr_py.cpp','ctensorarr_py.cpp','cmaps_py.cpp'])], 
       cmdclass={'build_ext': BuildExtension}
       )
 

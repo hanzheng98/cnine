@@ -25,6 +25,17 @@
 //std::default_random_engine rndGen;
 #include "Cnine_base.cpp"
 
+#include "RtensorA_add_plus_cop.hpp"
+#include "CtensorA_add_plus_cop.hpp"
+
+#include "CellwiseBinaryCmap.hpp"
+
+
+//  using namespace cnine;
+//namespace py=pybind11;
+
+#include "cmaps_py.cpp"
+
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
@@ -76,14 +87,19 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
     .def(pybind11::init<>())
     .def("str",&CscalarObj::str,py::arg("indent")="")
     .def("__str__",&CscalarObj::str,py::arg("indent")="");
+  
 
+#include "rtensor_py.cpp"
+#include "ctensor_py.cpp"
+  
+#include "rtensorarr_py.cpp"
+#include "ctensorarr_py.cpp"
 
-  #include "rtensor_py.cpp"
-  #include "ctensor_py.cpp"
-
-  #include "rtensorarr_py.cpp"
-  #include "ctensorarr_py.cpp"
-
+  //#include "cmaps_py.cpp"
+    
+  def_inner<CtensorA_add_plus_cop,CtensorArray>(m);
+  def_outer<CtensorA_add_plus_cop,CtensorArray>(m);
+  def_cellwise<CtensorA_add_plus_cop,CtensorArray>(m);
 
 }
 

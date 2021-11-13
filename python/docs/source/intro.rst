@@ -17,16 +17,21 @@ Installing cnine requires the following:
 #. C++11 or higher
 #. Python
 #. Pybind11 
+#. PyTorch (optional)
 
 To install cnine follow these steps:
 
 #. Download the cnine package from `github <https://github.com/risi-kondor/cnine>`_. 
-#. Edit the file ``config.txt``, in particular, make sure that ``CNINE_ROOT`` points to the root of 
-   the **cnine** package on your system. 
+#. Edit the file ``config.txt`` as necessary. 
 #. Run ``python setup.sty install`` in the ``python`` directory to compile the package and install it on your 
    system.
  
 To use `cnine` from Python, load the corresponding module the usual way with ``import cnine``. 
-In the following we also assume that ``from cnine import *`` has also been called,  
-obviating the need to prefix all classes with ``cnine.``.
+In the following we assume that ``from cnine import *`` has also been called,  
+obviating the need to prefix all `cnine` classes with ``cnine.``.
 
+************
+Known issues
+************
+
+GPU functionality is temporarily disabled. 

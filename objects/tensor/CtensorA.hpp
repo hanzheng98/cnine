@@ -95,7 +95,7 @@ namespace cnine{
       CtensorA(Gdims({0})){}
 
 
-  protected: // ---- Constructors -----------------------------------------------------------------------------
+  public: // ---- Constructors -----------------------------------------------------------------------------
 
     
     CtensorA(const Gdims& _dims, const int _dev=0): 
