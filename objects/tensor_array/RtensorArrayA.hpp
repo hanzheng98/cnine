@@ -282,7 +282,7 @@ namespace cnine{
 
     RtensorArrayA(const RtensorArrayA& x):
       RtensorA(x), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), astrides(x.astrides), cstrides(x.cstrides), 
-      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){}
+      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){cout<<"copy!"<<endl;}
 
     RtensorArrayA(RtensorArrayA&& x):
       RtensorA(std::move(x)), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), 
@@ -518,6 +518,11 @@ namespace cnine{
       return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,flag::view);
     }
 
+    RtensorA cell_view(const int i){
+      //cout<<"RtensorA view"<<endl;
+      return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,flag::view);
+    }
+
     RtensorA cell(const int i, const int j){
       //cout<<"RtensorA view"<<endl;
       return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+(i*astrides[0]+j*astrides[1])*cellstride,flag::view);
@@ -525,6 +530,11 @@ namespace cnine{
 
     const RtensorA cell(const int i, const int j) const{
       //cout<<"const RtensorA view"<<endl;
+      return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+(i*astrides[0]+j*astrides[1])*cellstride,flag::view);
+    }
+
+    RtensorA cell_view(const int i, const int j){
+      //cout<<"RtensorA view"<<endl;
       return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+(i*astrides[0]+j*astrides[1])*cellstride,flag::view);
     }
 
@@ -536,6 +546,12 @@ namespace cnine{
 
     const RtensorA cell(const Gindex& aix) const{
       //cout<<"const RtensorA view"<<endl;
+      int i=aix(astrides);
+      return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,flag::view);
+    }
+
+    RtensorA cell_view(const Gindex& aix){
+      //cout<<"RtensorA view"<<endl;
       int i=aix(astrides);
       return RtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,flag::view);
     }
@@ -939,6 +955,19 @@ namespace cnine{
       */
     }
 
+
+    void broadcast_add(const RtensorA& x){
+      assert(dev==x.dev);
+      assert(nbu==x.nbu);
+      assert(x.cdims==cdims);
+      if(dev==0){
+	for(int i=0; i<aasize; i++){
+	  stdadd(x.arr,x.arr+x.asize,arr+i*cellstride);
+	}
+      }
+    }
+
+
     void broadcast_add(const int ix, const RtensorArrayA& x){
       assert(dev==x.dev);
       assert(nbu==x.nbu);
@@ -1076,6 +1105,17 @@ namespace cnine{
   public: // ---- Operations ---------------------------------------------------------------------------------
 
 
+    RtensorArrayA plus(const RtensorArrayA& y) const{
+      RtensorArrayA R(*this);
+      R.add(y);
+      return R;
+    }
+
+    RtensorArrayA plus(const RtensorA& y) const{
+      RtensorArrayA R(*this);
+      R.broadcast_add(y);
+      return R;
+    }
 
     
   public: // ---- Cellwise cumulative operations -------------------------------------------------------------

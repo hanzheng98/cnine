@@ -81,6 +81,8 @@ pybind11::class_<CtensorArray>(m,"ctensor_arr")
   .def("__iadd__",[](CtensorArray& x, const CtensorArray& y){x.add(y); return x;})
   .def("__isub__",[](CtensorArray& x, const CtensorArray& y){x.subtract(y); return x;})
 
+  .def("__add__",[](const CtensorArray& x, const CtensorObj& y){return x.broadcast_plus(y);})
+
   .def("widen",&CtensorArray::widen)
   .def("reduce",&CtensorArray::reduce)
 

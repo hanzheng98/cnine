@@ -233,7 +233,7 @@ the operation will be performed on the GPU and the result placed on the same GPU
 gdims and gindex
 ================
 
-In the previous examples tensors dimensions and tensor indices were given simply as lists.  
+In the previous examples tensors dimensions and tensor indices were specified simply as lists.  
 As an alternative, tensor dimensions and indices can also be specified using the specialized 
 classes `gdims` and `gindex`. 
 
@@ -255,7 +255,7 @@ Complex tensors
 ===============
 
 
-The ``ctensor`` complex valued tensor class supports all the above operations. 
+The ``ctensor`` complex valued tensor class supports all the same operations as ``rtensor``. 
 In addition, it also has ``conj`` and ``herm`` methods to take the conjugate 
 and conjugate transpose (Hermitian conjugate) of the tensor.
 
@@ -285,9 +285,9 @@ The default backend class for real tensors is ``RtensorA`` and for complex tenso
 :math:`d_1 \ldots d_k` floating point numbers in row major order. 
 ``CtensorA`` stores a complex tensor as a single array consisting of the 
 real part of the tensor followed by the imaginary part. 
-To facilitate memory access on the GPU the offset of the imaginary part is rounded up to the nearest 
+To facilitate memory access on the GPU, the offset of the imaginary part is rounded up to the nearest 
 multiple of 128 bytes. 
 
 A tensor object's header, including information about tensor dimensions, strides, etc., is always resident on 
-the host. When a tensor array is moved to the GPU, only the array containing the actual tensor entries 
+the host. When a tensor array is moved to the GPU, only the array containing the tensor entries 
 is moved to the  GPU's global memory. 

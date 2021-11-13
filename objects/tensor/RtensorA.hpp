@@ -313,6 +313,7 @@ namespace cnine{
 
     RtensorA(const RtensorA& x): 
       RtensorA(x.k,x.dims,x.strides,x.asize,x.memsize,x.cst,x.dev){
+      //cout<<"RtensorA copied"<<endl;
       if(dev==0){
 	std::copy(x.arr,x.arr+asize,arr);
       }

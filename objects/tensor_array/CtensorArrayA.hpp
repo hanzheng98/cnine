@@ -546,6 +546,11 @@ namespace cnine{
       return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,arrc+i*cellstride,flag::view);
     }
 
+    CtensorA cell_view(const int i){
+      //cout<<"CtensorA view"<<endl;
+      return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,arrc+i*cellstride,flag::view);
+    }
+
     CtensorA cell(const int i, const int j){
       //cout<<"CtensorA view"<<endl;
       return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+(i*astrides[0]+j*astrides[1])*cellstride,
@@ -558,6 +563,12 @@ namespace cnine{
 	arrc+(i*astrides[0]+j*astrides[1])*cellstride,flag::view);
     }
 
+    CtensorA cell_view(const int i, const int j){
+      //cout<<"CtensorA view"<<endl;
+      return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+(i*astrides[0]+j*astrides[1])*cellstride,
+	arrc+(i*astrides[0]+j*astrides[1])*cellstride,flag::view);
+    }
+
     CtensorA cell(const Gindex& aix){
       //cout<<"CtensorA view"<<endl;
       int i=aix(astrides);
@@ -566,6 +577,12 @@ namespace cnine{
 
     const CtensorA cell(const Gindex& aix) const{
       //cout<<"const CtensorA view"<<endl;
+      int i=aix(astrides);
+      return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,arrc+i*cellstride,flag::view);
+    }
+
+    CtensorA cell_view(const Gindex& aix){
+      //cout<<"CtensorA view"<<endl;
       int i=aix(astrides);
       return CtensorA(k,cdims,nbu,cstrides,asize,2*asize,dev,arr+i*cellstride,arrc+i*cellstride,flag::view);
     }
@@ -973,6 +990,18 @@ namespace cnine{
       }
     }
 
+    void broadcast_add(const CtensorA& x){
+      assert(dev==x.dev);
+      assert(nbu==x.nbu);
+      assert(x.cdims==cdims);
+      if(dev==0){
+	for(int i=0; i<aasize; i++){
+	  stdadd(x.arr,x.arr+x.asize,arr+i*cellstride);
+	  stdadd(x.arrc,x.arrc+x.asize,arrc+i*cellstride);
+	}
+      }
+    }
+
     void broadcast_add(const int ix, const CtensorArrayA& x){
       assert(dev==x.dev);
       assert(nbu==x.nbu);
@@ -1134,6 +1163,19 @@ namespace cnine{
       return new CtensorArrayB(CFtensor::herm());
     }
     */
+
+
+    CtensorArrayA plus(const CtensorArrayA& y) const{
+      CtensorArrayA R(*this);
+      R.add(y);
+      return R;
+    }
+
+    CtensorArrayA plus(const CtensorA& y) const{
+      CtensorArrayA R(*this);
+      R.broadcast_add(y);
+      return R;
+    }
 
     
   public: // ---- Cellwise cumulative operations -------------------------------------------------------------

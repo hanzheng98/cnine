@@ -260,11 +260,13 @@ namespace cnine{
     RtensorObj herm() const{
       return RtensorObj(CNINE_RTENSORARRAY_IMPL::herm());
     }
+    */
 
-    RtensorObj plus(const RtensorObj& x){
-      return RtensorObj(CNINE_RTENSORARRAY_IMPL::plus(x));
+    RtensorArray plus(const RtensorArray& x) const{
+      return RtensorArray(CNINE_RTENSORARRAY_IMPL::plus(x));
     }
 
+    /*
     RtensorObj apply(std::function<complex<float>(const complex<float>)> fn) const{
       return CNINE_RTENSORARRAY_IMPL(*this,fn);
     }
@@ -274,9 +276,20 @@ namespace cnine{
     }
     */
 
+    RtensorArray broadcast_plus(const RtensorObj& x) const{
+      return RtensorArray(CNINE_RTENSORARRAY_IMPL::plus(x));
+    }
+
+
 
   public: // ---- Cumulative operations ----------------------------------------------------------------------
 
+
+    /*
+    void add(const RtensorArray& x, const float c){
+      CNINE_RTENSOR_IMPL::add(x,c);
+    }
+    */
 
     void add_mprod(const RtensorArray& x, const RtensorArray& y){
       add_Mprod_AA(x,y);
@@ -396,10 +409,12 @@ namespace cnine{
       //replace(R.hdl,Cengine_engine->push<ctensor_add_inp_op>(R.hdl,hdl,hdl,dims));
     //}
 
+    /*
     void add_norm2_back(const RscalarObj& g, const RtensorObj& x){
       add(x,g);
       add(x,g);
     }
+    */
 
 
   // ---- In-place operators ---------------------------------------------------------------------------------

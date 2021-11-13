@@ -214,7 +214,7 @@ namespace cnine{
       assert(y.aasize==I);
       if(r.dev==0){
 	for(int i=0; i<I; i++){
-	  decltype(x.get_cell(0)) t=r.cell(i);
+	  decltype(r.cell_view(0)) t=r.cell_view(i);
 	  op(t,x.cell(i),y.cell(i));
 	}
       }
@@ -248,7 +248,7 @@ namespace cnine{
       assert(y.aasize==I);
       if(r.dev==0){
 	for(int i=0; i<r.aasize; i++){
-	  decltype(r.get_cell(0)) t=r.cell(i);
+	  decltype(r.cell_view(0)) t=r.cell_view(i);
 	  op(t,x.cell(0),y.cell(i));
 	}
       }
@@ -282,7 +282,7 @@ namespace cnine{
       assert(x.aasize==I);
       if(r.dev==0){
 	for(int i=0; i<r.aasize; i++){
-	  decltype(x.get_cell(0)) t=r.cell(i);
+	  decltype(x.cell_view(0)) t=r.cell(i);
 	  op(t,x.cell(i),y.cell(0));
 	}
       }
@@ -315,7 +315,7 @@ namespace cnine{
       int I=x.aasize;
       assert(y.aasize==I);
       if(r.dev==0){
-	decltype(r.get_cell(0)) t=r.cell(0);
+	decltype(r.cell_view(0)) t=r.cell_view(0);
        	for(int i=0; i<I; i++)
 	  op(t,x.cell(i),y.cell(i));
       }
@@ -354,7 +354,7 @@ namespace cnine{
 	assert(r.aasize==I*J);
        	for(int i=0; i<I; i++)
 	  for(int j=0; j<J; j++){
-	    decltype(x.get_cell(0)) t=r.cell(i*J+j);
+	    decltype(r.cell_view(0)) t=r.cell_view(i*J+j);
 	    op(t,x.cell(i),y.cell(j));
 	  }
       }
@@ -389,7 +389,7 @@ namespace cnine{
       assert(x.aasize==I*J);
       if(r.dev==0){
        	for(int i=0; i<I; i++){
-	  decltype(r.get_cell(0)) t=r.cell(i);
+	  decltype(r.cell_view(0)) t=r.cell_view(i);
 	  for(int j=0; j<J; j++){
 	    op(t,x.cell(i*J+j),y.cell(j));
 	  }
@@ -427,7 +427,7 @@ namespace cnine{
       assert(x.aasize==I+J);
       if(r.dev==0){
        	for(int i=0; i<I; i++){
-	  decltype(r.get_cell(0)) t=r.cell(i);
+	  decltype(r.cell_view(0)) t=r.cell_view(i);
 	  for(int j=0; j<J; j++){
 	    op(t,x.cell(i+j),y.cell(j));
 	  }
@@ -480,7 +480,7 @@ namespace cnine{
       if(r.dev==0){
        	for(int i0=0; i0<I0; i0++){
 	  for(int i1=0; i1<I1; i1++){
-	    decltype(r.get_cell(0)) t=r.cell({i0,i1});
+	    decltype(r.cell_view(0)) t=r.cell_view({i0,i1});
 	    for(int j0=0; j0<J0; j0++)
 	      for(int j1=0; j1<J1; j1++){
 		op(t,x.cell({i0+j0,i1+j1}),y.cell({j0,j1}));

@@ -273,11 +273,13 @@ namespace cnine{
     CtensorObj herm() const{
       return CtensorObj(CNINE_CTENSORARRAY_IMPL::herm());
     }
+    */
 
-    CtensorObj plus(const CtensorObj& x){
-      return CtensorObj(CNINE_CTENSORARRAY_IMPL::plus(x));
+    CtensorArray plus(const CtensorArray& x) const{
+      return CtensorArray(CNINE_CTENSORARRAY_IMPL::plus(x));
     }
 
+    /*
     CtensorObj apply(std::function<complex<float>(const complex<float>)> fn) const{
       return CNINE_CTENSORARRAY_IMPL(*this,fn);
     }
@@ -286,6 +288,10 @@ namespace cnine{
       return CNINE_CTENSORARRAY_IMPL(*this,fn);
     }
     */
+
+    CtensorArray broadcast_plus(const CtensorObj& x) const{
+      return CtensorArray(CNINE_CTENSORARRAY_IMPL::plus(x));
+    }
 
 
   public: // ---- Cumulative operations ----------------------------------------------------------------------

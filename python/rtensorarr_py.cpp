@@ -81,6 +81,8 @@ pybind11::class_<RtensorArray>(m,"rtensor_arr")
   .def("__iadd__",[](RtensorArray& x, const RtensorArray& y){x.add(y); return x;})
   .def("__isub__",[](RtensorArray& x, const RtensorArray& y){x.subtract(y); return x;})
 
+  .def("__add__",[](const RtensorArray& x, const RtensorObj& y){return x.broadcast_plus(y);})
+
   .def("widen",&RtensorArray::widen)
   .def("reduce",&RtensorArray::reduce)
 
