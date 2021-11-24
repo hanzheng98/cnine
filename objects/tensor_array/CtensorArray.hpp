@@ -8,7 +8,7 @@
 
 
 #ifndef _CnineCtensorArray
-#define _include
+#define _CnineCtensorArray
 
 #include "Cnine_base.hpp"
 #include "CtensorArrayA.hpp"

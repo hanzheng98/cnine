@@ -43,11 +43,11 @@ pybind11::class_<CtensorArray>(m,"ctensor_arr")
 //.def("get_k",&RtensorObj::get_k)
 //    .def("getk",&RtensorObj::get_k)
   
-  .def("get_nadims",&CtensorArray::get_adims)
+//.def("get_nadims",&CtensorArray::get_adims)
   .def("get_adims",&CtensorArray::get_adims)
   .def("get_adim",&CtensorArray::get_adim)
 
-  .def("get_ncdims",&CtensorArray::get_cdims)
+//.def("get_ncdims",&CtensorArray::get_cdims)
   .def("get_cdims",&CtensorArray::get_cdims)
   .def("get_cdim",&CtensorArray::get_cdim)
 

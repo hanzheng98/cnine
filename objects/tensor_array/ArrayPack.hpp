@@ -118,6 +118,10 @@ namespace cnine{
       return array[0]->get_nbu();
     }
 
+    int get_adim(const int i) const{
+      return adims[i];
+    }
+
     Gdims get_adims() const{
       return adims;
     }
@@ -180,6 +184,17 @@ namespace cnine{
       assert(y.array.size()==array.size());
       for(int i=0; i<array.size(); i++)
 	array[i]->add(*y.array[i],c);
+    }
+
+
+  public: // ---- Operations ---------------------------------------------------------------------------------
+
+
+    ArrayPack plus(const ArrayPack& y) const{
+      ArrayPack R(adims);
+      for(int i=0; i<array.size(); i++)
+	R.array.push_back(new ARRAY(array[i]->plus(*y.array[i])));
+      return R;
     }
 
 
