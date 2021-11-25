@@ -241,6 +241,10 @@ namespace cnine{
       return oss.str();
     }
 
+    string repr(const string indent="") const{
+      return "<cnine::Gdims"+str()+">";
+    }
+
     friend ostream& operator<<(ostream& stream, const Gdims& x){
       stream<<x.str(); return stream;
     }

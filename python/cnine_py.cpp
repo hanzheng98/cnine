@@ -65,14 +65,22 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
     .def("__getitem__",&Gdims::operator())
     .def("__setitem__",&Gdims::set)
 
-    .def("__str__",&Gdims::str);
+    .def("str",&Gdims::str)
+    .def("__str__",&Gdims::str)
+    .def("__repr__",&Gdims::repr);
 
 
 
   pybind11::class_<Gindex>(m,"gindex")
     .def(pybind11::init<vector<int> >())
+
+    .def("__len__",&Gindex::size)
+    .def("__getitem__",[](const Gindex& obj, const int i){return obj(i);})
+    .def("__setitem__",&Gindex::set)
+
     .def("str",&Gindex::str)
-    .def("__str__",&Gindex::str);
+    .def("__str__",&Gindex::str)
+    .def("__repr__",&Gindex::repr);
 
 
 

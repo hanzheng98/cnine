@@ -35,10 +35,30 @@ using namespace std;
   if (!(condition)) {cout<<message<<endl; assert ((condition)); exit(-1); }
 #define CNINE_UNIMPL() printf("Cnine error: function \"%s\" not implemented.\n",__PRETTY_FUNCTION__);
 
-//#define COPY_WARNING
-#define CNINE_COPY_WARNING cout<<"\e[1mWarning:\e[0m "<<classname()<<" copied."<<endl;
-//#define ASSIGN_WARNING
-#define CNINE_ASSIGN_WARNING cout<<"\e[1mWarning:\e[0m "<<classname()<<" assigned."<<endl;
+#ifdef CNINE_COPY_WARNINGS
+#define CNINE_COPY_WARNING() cout<<"\e[1mcnine:\e[0m "<<classname()<<" copied."<<endl;
+#else 
+#define CNINE_COPY_WARNING()
+#endif 
+
+#ifdef CNINE_ASSIGN_WARNINGS
+#define CNINE_ASSIGN_WARNING() cout<<"\e[1mWarning:\e[0m "<<classname()<<" assigned."<<endl;
+#else
+#define CNINE_ASSIGN_WARNING() 
+#endif
+
+#ifdef CNINE_MOVE_WARNINGS
+#define CNINE_MOVE_WARNING() cout<<"\e[1mcnine:\e[0m "<<classname()<<" moved."<<endl;
+#else 
+#define CNINE_MOVE_WARNING()
+#endif 
+
+#ifdef CNINE_MOVEASSIGN_WARNINGS
+#define CNINE_MOVEASSIGN_WARNING() cout<<"\e[1mcnine:\e[0m "<<classname()<<" move assigned."<<endl;
+#else 
+#define CNINE_MOVEASSIGN_WARNING()
+#endif 
+
 
 #define CNINE_NOCUDA_ERROR cout<<"Error: Cnine was compiled without GPU support."<<endl;
 #define CNINE_CPUONLY() if(dev!=0) {printf("Cnine error: CUDA code for \"%s\" not implemented.\n",__PRETTY_FUNCTION__); exit(-1);}

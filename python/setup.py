@@ -31,7 +31,11 @@ ext_modules=[CppExtension('cnine', ['cnine_py.cpp'],
                                                                '-Wno-deprecated-declarations',
                                                                '-Wno-unused-variable',
                                                                '-Wno-reorder-ctor',
-                                                               '-D_WITH_ATEN'
+                                                               '-D_WITH_ATEN',
+                                                               '-DCNINE_COPY_WARNINGS',
+                                                               '-DCNINE_ASSIGN_WARNINGS',
+                                                               '-DCNINE_MOVE_WARNINGS',
+                                                               '-DCNINE_MOVEASSIGN_WARNINGS'
 #                                                               '-D_GLIBCXX_USE_CXX11_ABI=0'
                                                                ]},
                                  depends=['setup.py','cnine_py.cpp','rtensor_py.cpp','ctensor_py.cpp',

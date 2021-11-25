@@ -313,7 +313,7 @@ namespace cnine{
 
     RtensorA(const RtensorA& x): 
       RtensorA(x.k,x.dims,x.strides,x.asize,x.memsize,x.cst,x.dev){
-      //cout<<"RtensorA copied"<<endl;
+      CNINE_COPY_WARNING();
       if(dev==0){
 	std::copy(x.arr,x.arr+asize,arr);
       }
@@ -369,6 +369,7 @@ namespace cnine{
         
     RtensorA(RtensorA&& x): 
       RtensorA(x.k,x.dims,x.strides,x.asize,x.memsize,x.cst,x.dev){
+      CNINE_MOVE_WARNING();
       arr=x.arr; x.arr=nullptr; 
       arrg=x.arrg; x.arrg=nullptr;
       is_view=x.is_view;
@@ -385,6 +386,7 @@ namespace cnine{
     RtensorA& operator=(const RtensorA& x){
       k=x.k; dims=x.dims; strides=x.strides; asize=x.asize; dev=x.dev;
       memsize=x.memsize; cst=x.cst;
+      CNINE_ASSIGN_WARNING();
 
       if(is_view){
 	if(dev==0){
@@ -418,6 +420,7 @@ namespace cnine{
 
 
     RtensorA& operator=(RtensorA&& x){
+      CNINE_MOVEASSIGN_WARNING();
       k=x.k; dims=x.dims; strides=x.strides; asize=x.asize; dev=x.dev; 
       memsize=x.memsize; cst=x.cst; 
       if(!is_view && arr) delete arr;

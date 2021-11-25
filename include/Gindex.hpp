@@ -83,6 +83,10 @@ namespace cnine{
       return (*this)[i];
     }
 
+    void set(const int i, const int x){
+      (*this)[i]=x;
+    }
+
     int operator()(const vector<int>& strides) const{
       assert(strides.size()>=size());
       int t=0; 
@@ -136,6 +140,9 @@ namespace cnine{
       return str;
     }
 
+    string repr(const string indent="") const{
+      return "<cnine::Gdims"+str()+">";
+    }
 
 
   friend ostream& operator<<(ostream& stream, const Gindex& v){

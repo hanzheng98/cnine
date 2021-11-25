@@ -54,6 +54,13 @@ namespace cnine{
   public: // ---- Named constructors -------------------------------------------------------------------------
 
 
+    static CtensorObj raw(const Gdims& _dims, const int nbd=-1, const int _dev=0){
+      return CtensorObj(_dims,nbd,fill::raw,_dev);}
+    static CtensorObj raw(const Gdims& _dims, const int nbd, const device& _dev){
+      return CtensorObj(_dims,nbd,fill::raw,_dev.id());}
+    static CtensorObj raw(const Gdims& _dims, const device& _dev){
+      return CtensorObj(_dims,-1,fill::raw,_dev.id());}
+
     static CtensorObj zero(const Gdims& _dims, const int nbd=-1, const int _dev=0){
       return CtensorObj(_dims,nbd,fill::zero,_dev);}
     static CtensorObj zero(const Gdims& _dims, const int nbd, const device& _dev){
