@@ -198,10 +198,12 @@ dimensional tensor filled with zeros.</p>
 <span class="go">[ 0 0 0 0 ]</span>
 </pre></div>
 </div>
-<p>Alternative fill patters are <code class="docutils literal notranslate"><span class="pre">ones</span></code> (a tensor filled with 1s), <code class="docutils literal notranslate"><span class="pre">sequential</span></code> (a tensor filled
+<p>Alternative fill patters are <code class="docutils literal notranslate"><span class="pre">raw</span></code> (storage is allocated for the tensor but its entries are not
+initialized),
+<code class="docutils literal notranslate"><span class="pre">ones</span></code> (a tensor filled with 1s), <code class="docutils literal notranslate"><span class="pre">sequential</span></code> (a tensor filled
 with the numbers 0,1,2,… in sequence, <code class="docutils literal notranslate"><span class="pre">identity</span></code> (used to construct an identity matrix),
 and <code class="docutils literal notranslate"><span class="pre">gaussian</span></code> (a tensor whose elements are drawn i.i.d. from a standard normal distribution).</p>
-<p>The number of tensor dimensions and the dimensions themselves can be read out as follows.</p>
+<p>The number of tensor dimensions and the size of the individual dimensions can be read out as follows.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">zero</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">get_ndims</span><span class="p">()</span>
 <span class="go">3</span>
@@ -229,7 +231,7 @@ to all the dimensions are accessed as follows.</p>
 </section>
 <section id="accessing-tensor-elements">
 <h2>Accessing tensor elements<a class="headerlink" href="#accessing-tensor-elements" title="Permalink to this headline">¶</a></h2>
-<p>Tensor indexing in <cite>cnine</cite> always starts with 0 along each dimension.
+<p>Tensor indexing in <cite>cnine</cite> starts with 0 along each dimension.
 The following example shows how tensor elements can be set and read.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cnine</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">sequential</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
@@ -252,7 +254,7 @@ The following example shows how tensor elements can be set and read.</p>
 </section>
 <section id="arithmetic-operations">
 <h2>Arithmetic operations<a class="headerlink" href="#arithmetic-operations" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">rtensor</span></code> supports the usual arithmetic tensor and matrix operations.</p>
+<p>Tensors support the usual arithmetic operations.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">sequential</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="o">+</span><span class="n">B</span><span class="p">)</span>
@@ -272,7 +274,7 @@ The following example shows how tensor elements can be set and read.</p>
 <span class="go">[ 344 398 452 506 ]</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">rtensor</span></code> also offers in-place operators.</p>
+<p>The tensor classes also offer in-place operators.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">sequential</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">+=</span><span class="n">B</span>
@@ -334,7 +336,7 @@ each element of the tensor.</p>
 </section>
 <section id="slices-and-reshaping">
 <h2>Slices and reshaping<a class="headerlink" href="#slices-and-reshaping" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">slice(i,c)</span></code> method returns the slice of the tensor corresponding to setting the i’th index
+<p>The <code class="docutils literal notranslate"><span class="pre">slice(i,c)</span></code> method returns the slice of the tensor where the i’th index is
 equal to c. <code class="docutils literal notranslate"><span class="pre">reshape</span></code> reinterprets the tensor as a tensor of a different shape.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">=</span><span class="n">rtensor</span><span class="o">.</span><span class="n">sequential</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
