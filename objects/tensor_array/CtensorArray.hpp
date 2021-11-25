@@ -43,6 +43,13 @@ namespace cnine{
   public: // ---- Named constructors -------------------------------------------------------------------------
 
 
+    static CtensorArray raw(const Gdims& _adims, const Gdims& _dims, const int nbd=-1, const int _dev=0){
+      return CtensorArray(_adims,_dims,nbd,fill::raw,_dev);}
+    static CtensorArray raw(const Gdims& _adims, const Gdims& _dims, const int nbd, const device& _dev){
+      return CtensorArray(_adims,_dims,nbd,fill::raw,_dev.id());}
+    static CtensorArray raw(const Gdims& _adims, const Gdims& _dims, const device& _dev){
+      return CtensorArray(_adims,_dims,-1,fill::raw,_dev.id());}
+
     static CtensorArray zero(const Gdims& _adims, const Gdims& _dims, const int nbd=-1, const int _dev=0){
       return CtensorArray(_adims,_dims,nbd,fill::zero,_dev);}
     static CtensorArray zero(const Gdims& _adims, const Gdims& _dims, const int nbd, const device& _dev){
@@ -508,6 +515,10 @@ namespace cnine{
 
     string str(const string indent="") const{
       return CNINE_CTENSORARRAY_IMPL::str(indent);
+    }
+
+    string repr() const{
+      return "<cnine::CtensorArray"+adims.str()+cdims.str()+">";
     }
 
     friend ostream& operator<<(ostream& stream, const CtensorArray& x){

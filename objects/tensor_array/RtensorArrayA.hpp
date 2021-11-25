@@ -282,14 +282,19 @@ namespace cnine{
 
     RtensorArrayA(const RtensorArrayA& x):
       RtensorA(x), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), astrides(x.astrides), cstrides(x.cstrides), 
-      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){cout<<"copy!"<<endl;}
+      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){
+      CNINE_COPY_WARNING();
+    }
 
     RtensorArrayA(RtensorArrayA&& x):
       RtensorA(std::move(x)), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), 
       astrides(x.astrides), cstrides(x.cstrides), 
-      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){}
+      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){
+      CNINE_MOVE_WARNING();
+    }
 
     RtensorArrayA& operator=(const RtensorArrayA& x){
+      CNINE_ASSIGN_WARNING();
       RtensorA::operator=(x);
       ak=x.ak;
       nbu=x.nbu;
@@ -304,6 +309,7 @@ namespace cnine{
     }
 
     RtensorArrayA& operator=(RtensorArrayA&& x){
+      CNINE_MOVEASSIGN_WARNING();
       RtensorA::operator=(std::move(x));
       ak=x.ak;
       nbu=x.nbu;

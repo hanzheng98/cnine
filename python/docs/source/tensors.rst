@@ -28,11 +28,13 @@ dimensional tensor filled with zeros.
   [ 0 0 0 0 ]
   [ 0 0 0 0 ]
 
-Alternative fill patters are ``ones`` (a tensor filled with 1s), ``sequential`` (a tensor filled 
+Alternative fill patters are ``raw`` (storage is allocated for the tensor but its entries are not 
+initialized), 
+``ones`` (a tensor filled with 1s), ``sequential`` (a tensor filled 
 with the numbers 0,1,2,... in sequence, ``identity`` (used to construct an identity matrix), 
 and ``gaussian`` (a tensor whose elements are drawn i.i.d. from a standard normal distribution). 
 
-The number of tensor dimensions and the dimensions themselves can be read out as follows.
+The number of tensor dimensions and the size of the individual dimensions can be read out as follows.
 
 .. code-block:: python
 
@@ -70,7 +72,7 @@ Accessing tensor elements
 
 
 
-Tensor indexing in `cnine` always starts with 0 along each dimension. 
+Tensor indexing in `cnine` starts with 0 along each dimension. 
 The following example shows how tensor elements can be set and read. 
 
 .. code-block:: python
@@ -97,7 +99,7 @@ The following example shows how tensor elements can be set and read.
 Arithmetic operations
 =====================
 
-``rtensor`` supports the usual arithmetic tensor and matrix operations.
+Tensors support the usual arithmetic operations. 
 
 .. code-block:: python
 
@@ -119,7 +121,7 @@ Arithmetic operations
   [ 248 286 324 362 ]
   [ 344 398 452 506 ]
 
-``rtensor`` also offers in-place operators.
+The tensor classes also offer in-place operators.
 
 .. code-block:: python
 
@@ -196,7 +198,7 @@ The ``transp`` method returns the transpose of a matrix.
 Slices and reshaping
 ====================
 
-The ``slice(i,c)`` method returns the slice of the tensor corresponding to setting the i'th index 
+The ``slice(i,c)`` method returns the slice of the tensor where the i'th index is 
 equal to c. ``reshape`` reinterprets the tensor as a tensor of a different shape.
 
 .. code-block:: python

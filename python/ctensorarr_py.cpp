@@ -8,6 +8,12 @@ pybind11::class_<CtensorArray>(m,"ctensor_arr")
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_gaussian&>())
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_sequential&>())
 
+  .def_static("raw",static_cast<CtensorArray (*)(const Gdims&, const Gdims&, const int, const int)>(&CtensorArray::raw))
+  .def_static("raw",[](const Gdims& adims, const Gdims& dims, const int dev){
+      return CtensorArray::raw(dims,-1,dev);}, py::arg("adims"), py::arg("dims"), py::arg("device")=0)
+  .def_static("raw",[](const vector<int>& av, const vector<int>& v, const int dev){
+      return CtensorArray::raw(Gdims(av),Gdims(v),-1,dev);},py::arg("adims"),py::arg("dims"),py::arg("device")=0)
+
   .def_static("zero",static_cast<CtensorArray (*)(const Gdims&, const Gdims&, const int, const int)>(&CtensorArray::zero))
   .def_static("zero",[](const Gdims& adims, const Gdims& dims, const int dev){
       return CtensorArray::zero(dims,-1,dev);}, py::arg("adims"), py::arg("dims"), py::arg("device")=0)
@@ -89,5 +95,6 @@ pybind11::class_<CtensorArray>(m,"ctensor_arr")
   .def("to",&CtensorArray::to_device)
 
   .def("str",&CtensorArray::str,py::arg("indent")="")
-  .def("__str__",&CtensorArray::str,py::arg("indent")="");
+  .def("__str__",&CtensorArray::str,py::arg("indent")="")
+  .def("__repr__",&CtensorArray::repr);
 

@@ -8,6 +8,12 @@ pybind11::class_<RtensorArray>(m,"rtensor_arr")
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_gaussian&>())
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_sequential&>())
 
+  .def_static("raw",static_cast<RtensorArray (*)(const Gdims&, const Gdims&, const int, const int)>(&RtensorArray::raw))
+  .def_static("raw",[](const Gdims& adims, const Gdims& dims, const int dev){
+      return RtensorArray::raw(dims,-1,dev);}, py::arg("adims"), py::arg("dims"), py::arg("device")=0)
+  .def_static("raw",[](const vector<int>& av, const vector<int>& v, const int dev){
+      return RtensorArray::raw(Gdims(av),Gdims(v),-1,dev);},py::arg("adims"),py::arg("dims"),py::arg("device")=0)
+
   .def_static("zero",static_cast<RtensorArray (*)(const Gdims&, const Gdims&, const int, const int)>(&RtensorArray::zero))
   .def_static("zero",[](const Gdims& adims, const Gdims& dims, const int dev){
       return RtensorArray::zero(dims,-1,dev);}, py::arg("adims"), py::arg("dims"), py::arg("device")=0)
@@ -89,4 +95,5 @@ pybind11::class_<RtensorArray>(m,"rtensor_arr")
   .def("to",&RtensorArray::to_device)
 
   .def("str",&RtensorArray::str,py::arg("indent")="")
-  .def("__str__",&RtensorArray::str,py::arg("indent")="");
+  .def("__str__",&RtensorArray::str,py::arg("indent")="")
+  .def("__repr__",&RtensorArray::repr);

@@ -50,6 +50,13 @@ namespace cnine{
     static RtensorArray zero(const Gdims& _adims, const Gdims& _dims, const device& _dev){
       return RtensorArray(_adims,_dims,-1,fill::zero,_dev.id());}
 
+    static RtensorArray raw(const Gdims& _adims, const Gdims& _dims, const int nbd=-1, const int _dev=0){
+      return RtensorArray(_adims,_dims,nbd,fill::raw,_dev);}
+    static RtensorArray raw(const Gdims& _adims, const Gdims& _dims, const int nbd, const device& _dev){
+      return RtensorArray(_adims,_dims,nbd,fill::raw,_dev.id());}
+    static RtensorArray raw(const Gdims& _adims, const Gdims& _dims, const device& _dev){
+      return RtensorArray(_adims,_dims,-1,fill::raw,_dev.id());}
+
     static RtensorArray ones(const Gdims& _adims, const Gdims& _dims, const int nbd=-1, const int _dev=0){
       return RtensorArray(_adims,_dims,nbd,fill::ones,_dev);}
     static RtensorArray ones(const Gdims& _adims, const Gdims& _dims, const int nbd, const device& _dev){
@@ -504,6 +511,10 @@ namespace cnine{
 
     string str(const string indent="") const{
       return CNINE_RTENSORARRAY_IMPL::str(indent);
+    }
+
+    string repr() const{
+      return "<cnine::RtensorArray"+adims.str()+cdims.str()+">";
     }
 
     friend ostream& operator<<(ostream& stream, const RtensorArray& x){

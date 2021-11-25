@@ -140,7 +140,7 @@ namespace cnine{
       return str;
     }
 
-    string repr(const string indent="") const{
+    string repr() const{
       return "<cnine::Gdims"+str()+">";
     }
 

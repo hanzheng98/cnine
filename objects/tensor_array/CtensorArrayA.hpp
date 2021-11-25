@@ -276,14 +276,19 @@ namespace cnine{
 
     CtensorArrayA(const CtensorArrayA& x):
       CtensorA(x), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), astrides(x.astrides), cstrides(x.cstrides), 
-      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){}
+      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){
+      CNINE_COPY_WARNING();
+    }
 
     CtensorArrayA(CtensorArrayA&& x):
       CtensorA(std::move(x)), ak(x.ak), nbu(x.nbu), adims(x.adims), cdims(x.cdims), 
       astrides(x.astrides), cstrides(x.cstrides), 
-      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){}
+      aasize(x.aasize), asize(x.asize), cellstride(x.cellstride){
+      CNINE_MOVE_WARNING();
+    }
 
     CtensorArrayA& operator=(const CtensorArrayA& x){
+      CNINE_ASSIGN_WARNING();
       CtensorA::operator=(x);
       ak=x.ak;
       nbu=x.nbu;
@@ -298,6 +303,7 @@ namespace cnine{
     }
 
     CtensorArrayA& operator=(CtensorArrayA&& x){
+      CNINE_MOVEASSIGN_WARNING();
       CtensorA::operator=(std::move(x));
       ak=x.ak;
       nbu=x.nbu;

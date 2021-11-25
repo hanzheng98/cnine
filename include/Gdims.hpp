@@ -241,7 +241,7 @@ namespace cnine{
       return oss.str();
     }
 
-    string repr(const string indent="") const{
+    string repr() const{
       return "<cnine::Gdims"+str()+">";
     }
 

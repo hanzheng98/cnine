@@ -1,7 +1,7 @@
 `cnine` is a lightweight C++ tensor library with a CUDA backend and optional Python interface. 
 `cnine` is designed to expose GP-GPU functionality to the C++ or Python programmer.
 
-`cnine` is written by Risi Kondor at the University of Chicago and is released under the 
+`cnine` was developed by Risi Kondor at the University of Chicago and is released under the 
 `Mozilla public license v.2.0 <https://www.mozilla.org/en-US/MPL/2.0/>`_.   
 
 This document provides documentation for cnine's Python interface. Not all features in the C++ library 
@@ -12,7 +12,7 @@ in the package's ``doc`` directory.
 Installation
 ************
 
-Installing cnine requires the following:
+Installing `cnine` in Python requires the following:
 
 #. C++11 or higher
 #. Python

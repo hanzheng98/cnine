@@ -607,6 +607,10 @@ namespace cnine{
       return CNINE_CTENSOR_IMPL::str(indent);
     }
 
+    string repr() const{
+      return "<cnine::ctensor"+dims.str()+">";
+    }
+
     friend ostream& operator<<(ostream& stream, const CtensorObj& x){
       stream<<x.str(); return stream;}
 
