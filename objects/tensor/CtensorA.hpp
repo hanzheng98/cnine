@@ -604,18 +604,21 @@ namespace cnine{
 
     complex<float> operator()(const Gindex& ix) const{
       CNINE_ASSERT(dev==0,"CtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       return complex<float>(arr[t],arrc[t]);
     }
 
     complex<float> get_value(const Gindex& ix) const{
       CNINE_ASSERT(dev==0,"CtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       return complex<float>(arr[t],arrc[t]);
     }
     
     void set_value(const Gindex& ix, const complex<float>& v){
       CNINE_ASSERT(dev==0,"CtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       arr[t]=std::real(v);
       arrc[t]=std::imag(v);
@@ -623,6 +626,7 @@ namespace cnine{
 
     void inc(const Gindex& ix, const complex<float>& v){
       CNINE_ASSERT(dev==0,"CtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       arr[t]+=std::real(v);
       arrc[t]+=std::imag(v);

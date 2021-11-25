@@ -59,6 +59,11 @@ using namespace std;
 #define CNINE_MOVEASSIGN_WARNING()
 #endif 
 
+#ifdef CNINE_RANGE_CHECKING
+#define CNINE_CHECK_RANGE(expr) expr
+#else
+#define CNINE_CHECK_RANGE(expr)
+#endif
 
 #define CNINE_NOCUDA_ERROR cout<<"Error: Cnine was compiled without GPU support."<<endl;
 #define CNINE_CPUONLY() if(dev!=0) {printf("Cnine error: CUDA code for \"%s\" not implemented.\n",__PRETTY_FUNCTION__); exit(-1);}

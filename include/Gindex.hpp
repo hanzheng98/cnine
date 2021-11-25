@@ -120,6 +120,17 @@ namespace cnine{
 
   public:
 
+    void check_range(const Gdims& dims) const{
+      if(size()!=dims.size()) throw std::out_of_range("index "+str()+" out of range of dimensions"+dims.str());
+      for(int i=0; i<size(); i++)
+	if((*this)[i]<0) throw std::out_of_range("index "+str()+" out of range of dimensions"+dims.str());
+      for(int i=0; i<size(); i++)
+	if((*this)[i]>=dims[i]) throw std::out_of_range("index "+str()+" out of range of dimensions"+dims.str());
+    }
+
+
+  public:
+
     string str() const{
       string str="("; 
       int k=size();

@@ -435,12 +435,14 @@ namespace cnine{
 
 
     CtensorA get_cell(const Gindex& aix) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       CtensorA R(cdims,nbu,fill::raw,dev);
       copy_cell_into(R,aix);
       return R;
     }
 
     void copy_cell_into(CtensorA& R, const Gindex& aix) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       assert(dev==R.dev);
       int t=aix(strides);
       if(dev==0){
@@ -453,6 +455,7 @@ namespace cnine{
     }
 
     void add_cell_to(CtensorA& R, const Gindex& aix) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       assert(dev==R.dev);
       int t=aix(strides);
       if(dev==0){
@@ -470,6 +473,7 @@ namespace cnine{
     }
 
     void add_cell_into(CtensorA& R, const Gindex& aix) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       assert(dev==R.dev);
       int t=aix(strides);
       if(dev==0){
@@ -487,6 +491,7 @@ namespace cnine{
     }
 
     void set_cell(const Gindex& aix, const CtensorA& x) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       int t=aix(strides);
       if(dev==0){
 	std::copy(x.arr,x.arr+asize,arr+t);
@@ -500,6 +505,7 @@ namespace cnine{
     }
 
     void add_to_cell(const Gindex& aix, const CtensorA& x) const{
+      CNINE_CHECK_RANGE(aix.check_range(adims));
       int t=aix(strides);
       if(dev==0){
 	stdadd(x.arr,x.arr+asize,arr+t);

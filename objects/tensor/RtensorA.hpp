@@ -586,24 +586,28 @@ namespace cnine{
 
     float operator()(const Gindex& ix) const{
       CNINE_ASSERT(dev==0,"RtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       return arr[t];
     }
 
     float get_value(const Gindex& ix) const{
       CNINE_ASSERT(dev==0,"RtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       return arr[t];
     }
     
     void set_value(const Gindex& ix, const float& v){
       CNINE_ASSERT(dev==0,"RtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       arr[t]=v;
     }
 
     void inc(const Gindex& ix, const float& v){
       CNINE_ASSERT(dev==0,"RtensorA::operator() not implemented for GPU.\n");
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       int t=0; for(int i=0; i<k; i++) t+=ix[i]*strides[i];
       arr[t]+=v;
     }

@@ -207,6 +207,7 @@ namespace cnine{
  
 
     RscalarObj get(const Gindex& ix) const{
+      CNINE_CHECK_RANGE(ix.check_range(dims));
       return RscalarObj(CNINE_RTENSOR_IMPL::get(ix));
     }
 
