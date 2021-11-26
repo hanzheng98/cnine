@@ -19,6 +19,9 @@ pybind11::class_<RtensorObj>(m,"rtensor")
   .def(pybind11::init<const Gdims&, const fill_sequential&>())
 
   .def(pybind11::init<const at::Tensor&>())
+//.def_static("view",static_cast<RtensorA(*)(const at::Tensor&)>(&RtensorA_view))
+  .def_static("view",static_cast<RtensorObj(*)(at::Tensor&)>(&RtensorObj::view))
+//.def_static("const_view",static_cast<RtensorObj>(*)(const at::Tensor&)>(&RtensorObj::const_view))
   .def("torch",&RtensorObj::torch)
 
   .def_static("raw",static_cast<RtensorObj (*)(const Gdims&, const int, const int)>(&RtensorObj::raw))

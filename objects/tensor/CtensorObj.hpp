@@ -187,6 +187,15 @@ namespace cnine{
       CNINE_CTENSOR_IMPL(x,_dev.id()){}
 
 
+#ifdef _WITH_ATEN
+
+    static CtensorObj view(at::Tensor& T){
+      return CNINE_CTENSOR_IMPL::view(T);
+    }
+
+#endif
+
+
   public: // ---- Access -------------------------------------------------------------------------------------
 
 

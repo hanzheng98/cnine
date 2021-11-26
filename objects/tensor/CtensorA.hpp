@@ -519,11 +519,11 @@ namespace cnine{
       
 
       k=T.dim()-1;
-      if(k<=0 || T.size(k)!=2) throw std::out_of_range("CtensorA: last dimension of tensor must be 2, corresponding to the real and imaginary parts.");
+      if(k<=0 || T.size(0)!=2) throw std::out_of_range("CtensorA: first dimension of tensor must be 2, corresponding to the real and imaginary parts.");
 
       dims=Gdims(k,fill_raw());
       for(int i=0; i<k ; i++){
-	dims[i]=T.size(i);
+	dims[i]=T.size(i+1);
       }
       strides.resize(k);
       strides[k-1]=1;
@@ -548,6 +548,38 @@ namespace cnine{
 	CUDA_SAFE(cudaMemcpy(arrgc,T.data<float>()+asize,asize*sizeof(TYPE),cudaMemcpyDeviceToDevice));
       }
     }
+
+
+    static CtensorA view(at::Tensor& T){
+      T.contiguous();
+      
+      CtensorA R;
+      R.k=T.dim()-1;
+      R.dims.resize(R.k);
+      for(int i=0; i<R.k ; i++)
+	R.dims[i]=T.size(i+1);
+      R.strides.resize(R.k);
+      for(int i=0; i<R.k; i++)
+	R.strides[i]=T.stride(i+1);
+      R.asize=R.strides[0]*R.dims[0]; // TODO
+      R.cst=R.asize; 
+      R.memsize=2*R.cst; 
+      R.dev=T.type().is_cuda();
+      R.is_view=true;
+
+      if(R.dev==0){
+	R.arr=T.data<float>();
+	R.arrc=T.data<float>()+R.cst;
+      }
+      
+      if(R.dev==1){
+	R.arrg=T.data<float>();
+	R.arrgc=T.data<float>()+R.cst;
+      }
+
+      return R;
+    }
+    
 
     at::Tensor torch() const{
       assert(dev==0);

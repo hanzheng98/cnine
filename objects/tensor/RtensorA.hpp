@@ -499,6 +499,35 @@ namespace cnine{
       if(dev==1) CUDA_SAFE(cudaMemcpy(arrg,T.data<float>(),asize*sizeof(TYPE),cudaMemcpyDeviceToDevice));
     }
 
+
+    static RtensorA view(at::Tensor& T){
+      T.contiguous();
+      
+      RtensorA R;
+      R.k=T.dim();
+      R.dims.resize(R.k);
+      for(int i=0; i<R.k ; i++)
+	R.dims[i]=T.size(i);
+      R.strides.resize(R.k);
+      for(int i=0; i<R.k; i++)
+	R.strides[i]=T.stride(i);
+      R.asize=R.strides[0]*R.dims[0]; // TODO
+      R.cst=R.asize; 
+      R.memsize=R.cst; 
+      R.dev=T.type().is_cuda();
+      R.is_view=true;
+
+      if(R.dev==0){
+	R.arr=T.data<float>();
+      }
+      
+      if(R.dev==1){
+	R.arrg=T.data<float>();
+      }
+
+      return R;
+    }
+    
     at::Tensor torch() const{
       assert(dev==0);
       vector<int64_t> v(k); for(int i=0; i<2; i++) v[i]=dims[i];
@@ -1739,6 +1768,17 @@ namespace cnine{
       stream<<x.str(); return stream;}
    
   };
+
+
+  // ---- Post-class inline functions ------------------------------------------------------------------------
+
+
+#ifdef _WITH_ATEN
+
+
+
+#endif
+
 
 
 }

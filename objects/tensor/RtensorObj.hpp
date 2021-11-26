@@ -179,6 +179,15 @@ namespace cnine{
     }
 
 
+#ifdef _WITH_ATEN
+
+    static RtensorObj view(at::Tensor& T){
+      return CNINE_RTENSOR_IMPL::view(T);
+    }
+
+#endif
+
+
   public: // ---- Access -------------------------------------------------------------------------------------
 
 
