@@ -210,6 +210,14 @@ namespace cnine{
       return R;
     }
 
+    template<typename TYPE>
+    vector<TYPE> to_vec() const{
+      vector<TYPE> R(size());
+      for(int i=0; i<size(); i++)
+	R[i]=(*this)[i];
+      return R;
+    }
+
 
   public:
 

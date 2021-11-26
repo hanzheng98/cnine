@@ -457,9 +457,21 @@ namespace cnine{
 #ifdef _WITH_ATEN
 
     RtensorA(const at::Tensor& T){
-      assert(typeid(T.type().scalarType())==typeid(float));
+
+      //doesn't work
+      //AT_DISPATCH_ALL_TYPES(T.scalar_type(), "float",[&](){
+      //  cout<<"dioioa"<<endl;
+      //});
+
+	//if(typeid(T.scalar_type())!=at::ScalarType::Float){
+	//cout<<"fffwss"<<endl;
+	//auto Td=T.to(torch::kFloat32);
+	//(*this)=RtensorA(Td);
+	//return;
+	//}
+
       T.contiguous();
-      
+
       k=T.dim();
       dims=Gdims(k,fill_raw());
       for(int i=0; i<k ; i++){
@@ -472,6 +484,7 @@ namespace cnine{
       asize=strides[0]*dims[0];
       cst=roundup(asize,32); 
       memsize=cst; 
+
 
       dev=T.type().is_cuda();
       if(dev==0){

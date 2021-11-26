@@ -511,6 +511,58 @@ namespace cnine{
     }
 
 
+#ifdef _WITH_ATEN
+
+    CtensorA(const at::Tensor& T){
+      assert(typeid(T.type().scalarType())==typeid(float));
+      T.contiguous();
+      
+
+      k=T.dim()-1;
+      if(k<=0 || T.size(k)!=2) throw std::out_of_range("CtensorA: last dimension of tensor must be 2, corresponding to the real and imaginary parts.");
+
+      dims=Gdims(k,fill_raw());
+      for(int i=0; i<k ; i++){
+	dims[i]=T.size(i);
+      }
+      strides.resize(k);
+      strides[k-1]=1;
+      for(int i=k-2; i>=0; i--)
+	strides[i]=strides[i+1]*dims[i+1];
+      asize=strides[0]*dims[0];
+      cst=roundup(asize,32); 
+      memsize=2*cst; 
+
+      dev=T.type().is_cuda();
+      if(dev==0){
+	arr=new float[memsize];
+	arrc=arr+cst; 
+	std::copy(T.data<float>(),T.data<float>()+asize,arr);
+	std::copy(T.data<float>()+asize,T.data<float>()+2*asize,arrc);
+      }
+
+      if(dev==1){
+	CUDA_SAFE(cudaMalloc((void **)&arrg, memsize*sizeof(float)));
+	arrgc=arrg+cst; 
+	CUDA_SAFE(cudaMemcpy(arrg,T.data<float>(),asize*sizeof(TYPE),cudaMemcpyDeviceToDevice));
+	CUDA_SAFE(cudaMemcpy(arrgc,T.data<float>()+asize,asize*sizeof(TYPE),cudaMemcpyDeviceToDevice));
+      }
+    }
+
+    at::Tensor torch() const{
+      assert(dev==0);
+      vector<int64_t> v(k+1); 
+      for(int i=0; i<k-1; i++) v[i]=dims[i];
+      v[k-1]=2;
+      at::Tensor R(at::zeros(v,torch::CPU(at::kFloat))); 
+      std::copy(arr,arr+asize,R.data<float>());
+      std::copy(arr,arrc,R.data<float>()+asize);
+      return R;
+    }
+
+#endif 
+
+
   public: // ---- Transport -----------------------------------------------------------------------------------
 
 

@@ -18,6 +18,9 @@ pybind11::class_<CtensorObj>(m,"ctensor")
   .def(pybind11::init<const Gdims&, const fill_gaussian&>())
   .def(pybind11::init<const Gdims&, const fill_sequential&>())
 
+  .def(pybind11::init<const at::Tensor&>())
+  .def("torch",&CtensorObj::torch)
+
   .def_static("raw",static_cast<CtensorObj (*)(const Gdims&, const int, const int)>(&CtensorObj::raw))
   .def_static("raw",[](const Gdims& dims, const int dev){return CtensorObj::raw(dims,-1,dev);},
     py::arg("dims"),py::arg("device")=0)
@@ -97,6 +100,11 @@ pybind11::class_<CtensorObj>(m,"ctensor")
   .def("__call__",static_cast<complex<float>(CtensorObj::*)(const Gindex& )const>(&CtensorObj::get_value))
   .def("__call__",[](const CtensorObj& obj, const vector<int> v){return obj.get_value(Gindex(v));})
 
+  .def("__call__",[](const CtensorObj& obj, const int i0){return obj.get_value(i0);})
+  .def("__call__",[](const CtensorObj& obj, const int i0, const int i1){return obj.get_value(i0,i1);})
+  .def("__call__",[](const CtensorObj& obj, const int i0, const int i1, const int i2){
+      return obj.get_value(i0,i1,i2);})
+
   .def("__getitem__",static_cast<complex<float>(CtensorObj::*)(const Gindex& )const>(&CtensorObj::get_value))
   .def("__getitem__",[](const CtensorObj& obj, const vector<int> v){return obj.get_value(Gindex(v));})
 
@@ -136,7 +144,8 @@ pybind11::class_<CtensorObj>(m,"ctensor")
 //.def("__getitem__",static_cast<CscalarObj(CtensorObj::*)(const int, const int)const>(&CtensorObj::get))
 
   .def("str",&CtensorObj::str,py::arg("indent")="")
-  .def("__str__",&CtensorObj::str,py::arg("indent")="");
+  .def("__str__",&CtensorObj::str,py::arg("indent")="")
+  .def("__repr__",&CtensorObj::str,py::arg("indent")="");
 
 
 

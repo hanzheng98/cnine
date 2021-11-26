@@ -8,6 +8,9 @@ pybind11::class_<RtensorArray>(m,"rtensor_arr")
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_gaussian&>())
   .def(pybind11::init<const Gdims&, const Gdims&, const fill_sequential&>())
 
+  .def(pybind11::init<const int, const at::Tensor&>())
+  .def("torch",&RtensorArray::torch)
+
   .def_static("raw",static_cast<RtensorArray (*)(const Gdims&, const Gdims&, const int, const int)>(&RtensorArray::raw))
   .def_static("raw",[](const Gdims& adims, const Gdims& dims, const int dev){
       return RtensorArray::raw(dims,-1,dev);}, py::arg("adims"), py::arg("dims"), py::arg("device")=0)

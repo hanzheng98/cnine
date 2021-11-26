@@ -33,26 +33,10 @@ initialized),
 ``ones`` (a tensor filled with 1s), ``sequential`` (a tensor filled 
 with the numbers 0,1,2,... in sequence, ``identity`` (used to construct an identity matrix), 
 and ``gaussian`` (a tensor whose elements are drawn i.i.d. from a standard normal distribution). 
+For first, second and third order tensors, the list notation can be dropped, for example the 
+above tensor could have been initialized simply as ``A=rtensor.zero([4,4])``. 
 
 The number of tensor dimensions and the size of the individual dimensions can be read out as follows.
-
-.. code-block:: python
-
-  >>> A=rtensor.zero([3,4,4])
-  >>> G.get_ndims() 
-  3
-  >>> print(A.get_dims())
-  (3,4,4)
-  >>> print(A.get_dim(2))
-  4
-
-=================
-Tensor dimensions
-=================
-
-The number of tensor dimensions, the size of a specific dimenion and the ``gdims`` object corresponding 
-to all the dimensions are accessed as follows.
-
 
 .. code-block:: python
 
@@ -94,6 +78,10 @@ The following example shows how tensor elements can be set and read.
   [ 8 9 10 11 ]
   [ 12 13 14 15 ]
 
+Again, for first second and third order tensors indices can also be passed directly 
+as in ``A(1,2)`` for ``A([1,2])``. 
+
+
 
 =====================
 Arithmetic operations
@@ -103,19 +91,19 @@ Tensors support the usual arithmetic operations.
 
 .. code-block:: python
 
-  >>> A=rtensor.sequential([4,4])
-  >>> B=rtensor.ones([4,4])
-  >>> print(A+B)
+  >>> A=rtensor.sequential(4,4)
+  >>> B=rtensor.ones(4,4)
+  >>> A+B
   [ 1 2 3 4 ]
   [ 5 6 7 8 ]
   [ 9 10 11 12 ]
   [ 13 14 15 16 ]
-  >>> print(A*5)
+  >>> A*5
   [ 0 5 10 15 ]
   [ 20 25 30 35 ]
   [ 40 45 50 55 ]
   [ 60 65 70 75 ]
-  >>> print(A*A)
+  >>> A*A
   [ 56 62 68 74 ]
   [ 152 174 196 218 ]
   [ 248 286 324 362 ]
@@ -125,21 +113,55 @@ The tensor classes also offer in-place operators.
 
 .. code-block:: python
 
-  >>> B=rtensor.ones([4,4])
-  >>> A=rtensor.sequential([4,4])
+  >>> B=rtensor.ones(4,4)
+  >>> A=rtensor.sequential(4,4)
   >>> A+=B
-  >>> print(A)
+  >>> A
   [ 1 2 3 4 ]
   [ 5 6 7 8 ]
   [ 9 10 11 12 ]
   [ 13 14 15 16 ]
 
   >>> A-=B
-  >>> print(A)
+  >>> A
   [ 0 1 2 3 ]
   [ 4 5 6 7 ]
   [ 8 9 10 11 ]
   [ 12 13 14 15 ]
+
+
+==================================
+Conversion to/from Pytorch tensors
+==================================
+
+A single precision (i.e., ``float``) ``torch.Tensor`` can be converted to a cnine tensor and  
+vice versa. 
+
+
+.. code-block:: python
+
+ >>> A=torch.rand([3,3])
+ >>> A
+ tensor([[0.8592, 0.2147, 0.0056],
+	 [0.5370, 0.1644, 0.4119],
+	 [0.9330, 0.2284, 0.2406]])
+ >>> B=rtensor(A)
+ >>> B
+ [ 0.859238 0.214724 0.00555366 ]
+ [ 0.536953 0.164431 0.411862 ]
+ [ 0.932963 0.228432 0.240566 ]
+
+ >>> B+=B
+ >>> B
+ [ 1.71848 0.429447 0.0111073 ]
+ [ 1.07391 0.328861 0.823725 ]
+ [ 1.86593 0.456864 0.481133 ]
+
+ >>> C=B.torch()
+ >>> C
+ tensor([[1.7185, 0.4294, 0.0111],
+	 [1.0739, 0.3289, 0.8237],
+	 [1.8659, 0.4569, 0.4811]])
 
 
 ====================
@@ -211,6 +233,9 @@ equal to c. ``reshape`` reinterprets the tensor as a tensor of a different shape
   >>> print(A)
   [ 0 1 2 3 4 5 6 7 ]
   [ 8 9 10 11 12 13 14 15 ]
+
+By default, Python assigns objects by reference. To create an actual copy of a cnine tensor, 
+use the ``copy()`` method. 
 
 
 =================

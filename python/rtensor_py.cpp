@@ -103,6 +103,11 @@ pybind11::class_<RtensorObj>(m,"rtensor")
   .def("__getitem__",static_cast<float(RtensorObj::*)(const Gindex& )const>(&RtensorObj::get_value))
   .def("__getitem__",[](const RtensorObj& obj, const vector<int> v){return obj.get_value(Gindex(v));})
 
+  .def("__call__",[](const RtensorObj& obj, const int i0){return obj.get_value(i0);})
+  .def("__call__",[](const RtensorObj& obj, const int i0, const int i1){return obj.get_value(i0,i1);})
+  .def("__call__",[](const RtensorObj& obj, const int i0, const int i1, const int i2){
+      return obj.get_value(i0,i1,i2);})
+
   .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const Gindex&, const float)>(&RtensorObj::set_value))
   .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const int, const float)>(&RtensorObj::set_value))
   .def("set_value",static_cast<RtensorObj&(RtensorObj::*)(const int, const int, const float)>(&RtensorObj::set_value))
@@ -128,9 +133,6 @@ pybind11::class_<RtensorObj>(m,"rtensor")
 
   .def("__iadd__",[](RtensorObj& x, const RtensorObj& y){x.add(y); return x;})
   .def("__isub__",[](RtensorObj& x, const RtensorObj& y){x.subtract(y); return x;})
-
-
-
 
   .def("slice",&RtensorObj::slice)
   .def("chunk",&RtensorObj::chunk)
