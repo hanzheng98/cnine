@@ -584,11 +584,11 @@ namespace cnine{
     at::Tensor torch() const{
       assert(dev==0);
       vector<int64_t> v(k+1); 
-      for(int i=0; i<k-1; i++) v[i]=dims[i];
-      v[k-1]=2;
+      for(int i=0; i<k; i++) v[i+1]=dims[i];
+      v[0]=2;
       at::Tensor R(at::zeros(v,torch::CPU(at::kFloat))); 
       std::copy(arr,arr+asize,R.data<float>());
-      std::copy(arr,arrc,R.data<float>()+asize);
+      std::copy(arrc,arrc+asize,R.data<float>()+asize);
       return R;
     }
 
